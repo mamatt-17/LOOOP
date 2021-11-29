@@ -21,7 +21,6 @@ b <- ldply(filenames, read.csv)
 
     # B. 3 Rivers----
 b$system.code <- as.character(b$system.code)
-b$station.code <- as.character(b$station.code)
 b$date <- as.Date(b$date,format = "%m/%d/%Y")
 b$datetime <- as.POSIXct(paste(b$date, b$time), format = "%Y-%m-%d %H:%M") # Time cannot exist without date
 
@@ -39,9 +38,16 @@ mutate(tp = lapply(timeperiod,
                                  if(y == "(9,12]"  | y == "(12,15]" ) 
                                    3 
                                else 4))
-                               
-
-    # C. Lake Ontario----
+b$tp <- as.factor(as.character(b$tp))
+    
+    # Factor stations and add coordinates
+b$station.code <- as.factor(as.character(b$station.code))
+buoy.coord <-as.data.frame(unique(b$station.code))
+names(buoy.coord) <-c("station.code")
+buoy.coord$lat <-c(43.440481,43.44995,43.205123,43.231178,43.193388,43.139376,43.147516,43.103883,43.100510,43.108055)
+buoy.coord$long <- c(-76.490645,-76.50349,-76.269799,-76.309791,-76.279911,-76.238025,-76.314771,-76.445725,-76.499537,-76.475456)
+    
+# C. Lake Ontario----
 
     # D. Oneida Lake----   
     
