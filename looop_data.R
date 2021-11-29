@@ -1,7 +1,7 @@
 # Script for cleaning and formatting data to be used with LOOOP Shiny page
 
 # Set working directory and load packages----
-my_packages <- c("lubridate", "plyr", "openxlsx", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2")
+my_packages <- c("lubridate", "plyr", "dplyr","ggpubr","tidyr")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
@@ -25,7 +25,7 @@ b$date <- as.Date(b$date,format = "%m/%d/%Y")
 b$datetime <- as.POSIXct(paste(b$date, b$time), format = "%Y-%m-%d %H:%M") # Time cannot exist without date
 
     # Adding time period factor based on collection time (1. 21:00-3:00, 2.  3:01-9:00, 3. 9:01-15:00, 4. 15:01-21:00)
-b$timeperiod <- cut(hour(b$datetime), breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24), include.lowest = TRUE)
+b$timeperiod <- cut(hour(b$datetime), breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24), include.lowest = TRUE) 
 b <- b %>% 
 mutate(tp = lapply(timeperiod, 
                            function(y) 
@@ -44,11 +44,15 @@ b$tp <- as.factor(as.character(b$tp))
 b$station.code <- as.factor(as.character(b$station.code))
 buoy.coord <-as.data.frame(unique(b$station.code))
 names(buoy.coord) <-c("station.code")
-buoy.coord$lat <-c(43.440481,43.44995,43.205123,43.231178,43.193388,43.139376,43.147516,43.103883,43.100510,43.108055)
-buoy.coord$long <- c(-76.490645,-76.50349,-76.269799,-76.309791,-76.279911,-76.238025,-76.314771,-76.445725,-76.499537,-76.475456)
+buoy.coord$lat <-c(43.240093,43.44995,43.205123,43.231178,43.193388,43.139376,43.147516,43.103883,43.100510,43.108055)
+buoy.coord$long <- c(-76.147568,-76.50349,-76.269799,-76.309791,-76.279911,-76.238025,-76.314771,-76.445725,-76.499537,-76.475456)
+#buoy.coord <-as.data.frame(unique(b$station.code)) # Check that the buoys are in the right river
+
+    # Remove time_id and data_id
+b <- b %>% select(!c(time_id,data_id))
     
-# C. Lake Ontario----
+    # C. Lake Ontario----
 
     # D. Oneida Lake----   
     
-    
+# Save final file as .rdata for easier read into app----
