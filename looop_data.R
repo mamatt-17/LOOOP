@@ -46,7 +46,7 @@ buoy.coord <-as.data.frame(unique(b$station.code))
 names(buoy.coord) <-c("station.code")
 buoy.coord$lat <-c(43.240093,43.44995,43.205123,43.231178,43.193388,43.139376,43.147516,43.103883,43.100510,43.108055)
 buoy.coord$long <- c(-76.147568,-76.50349,-76.269799,-76.309791,-76.279911,-76.238025,-76.314771,-76.445725,-76.499537,-76.475456)
-#unique(b[c("system.code","station.code")]) # Check that the buoys are in the right river
+#unique(b[c("system.code","station.code")],) # Check that the buoys are in the right river
 
     # Round depth to nearest meter (determine if there's profiles, discrete depths, or typos)
 b <- b %>%
@@ -65,6 +65,15 @@ names(b) <- c("System", "Station", "Date", "Abs.Time", "Abs.Depth","Temp","SC","
 
 #cbind(lapply(lapply(b, is.na), sum)) # Identifying columns that have NAs
 b1 <- b[!(is.na(b$Temp)) | !(is.na(b$SC)) | !(is.na(b$pH)) | !(is.na(b$DO))| !(is.na(b$Tn))| !(is.na(b$Chl)),] # Removing rows that have no data at all (Some NAs left within single columns for faulty probes, etc.)
+
+
+
+b2 <- b1 %>% mutate(
+    year = year(Date)
+)
+
+
+
 
 s.check<- plyr::ddply(b1, .variables = .(Station), plyr::summarize,
                       t = mean(Temp, na.rm = T),
