@@ -1,0 +1,37 @@
+---
+title: "Onondaga Lake/People"
+author: "Lauren Kelly"
+output:
+  html_document:
+    toc: TRUE
+---
+# Effects of Pollution- A historical case study of Onondaga Lake
+##### *Lauren Kelly; 2021 B.S. Graduate, State University of New York- College of Environmental Science and Forestry, Environmental Studies-Environment, Communication and Society*
+---  
+<style type = "text/css">
+  body{
+  font-size: 12pt;
+  }
+</style>
+Onondaga Lake has been a fundamental part of the landscape of Onondaga County and Central New York hundreds of years. Located in the heart of Syracuse, NY, Onondaga Lake is approximately 4.5 miles long and one mile wide (Onondaga Lake, 2014). The average depth of the lake is approximately 36 feet (11 meters) deep, with two deep basins on the northern and southern ends. Onondaga Lake was the epicenter of the Haudenosaunee Confederacy, a cooperative collective of five indigenous nations that resided within the current New York boundaries. This area was considered a sacred place to the Haudenosaunee, and full of abundant natural resources for the tribes, including salt which became an important export after white settlement in the late 1800s. The land  was occupied exclusively by Haudenosaunee until after the Revolutionary War (Ferguson, 2020), and had deep connections to Onondaga Lake both spiritually and domestically. Unfortunately, now, Onondaga Lake is considered a Superfund site, due to the severity of toxic waste existing in its ecosystem.  
+
+Onondaga Lake was a naturally productive, rich system that brought many people to Syracuse to utilize its resources, including natural salts, abundant fishing opportunities, and recreational value, which led to increased industrialization in Syracuse and the surrounding area in the 19th and 20th centuries (Onondaga Lake Watershed History, 2014).  Increased availability of jobs in industry and the abundance of natural resources led to the dilapidation of the local natural environment.  Municipal pollution, industrial pollution, and sedimentation all became severe issues that impacted how the lake community, including the remaining Haudenosaunee peoples, could use the lake. Municipal and domestic pollution crept into the waters of Onondaga Lake from direct dumping of wastes and sewage overflow (Onondaga Lake Watershed History, 2014).  As more people settled in Syracuse and lakeshore industries’ productions steadily increased, the effects of pollution began to appear as early as 1901. Ice harvesting from the lake stopped completely due to the presence of pollutants in lake ice, and eventually swimming and eating fish from the lake were also restricted due to health advisories (in 1940 and 1970s, respectively) (Onondaga Lake - NYS Dept. of Environmental Conservation, n.d.). This directly affected the people that depended on those resources as a source of income or sustenance.  
+
+ Municipal and domestic pollution from direct dumping and sewage overflow has affected Onondaga Lake for over 100 years (Superfund Site Profile, n.d.). Syracuse utilizes combined sewer overflows (CSOs), which are used to collect domestic sewage, industrial wastewater, and runoff and be treated at the waste water treatment plant. During heavy rainfall, though, these systems cannot handle large influxes of water, so untreated water is directly discharged to Onondaga Creek and Onondaga Lake. The untreated water can contain bacteria, trash, and chemical compounds that affect water quality and the lake ecosystem. Ammonia and phosphorus are two naturally occurring nutrients that are present in lakes but adding more of these compounds through discharging untreated human waste can alter the ecosystem. High levels of ammonia are toxic to aquatic life, and high phosphorus concentrations can contribute to excessive algae growth or form algal blooms. Large amounts of algae can deplete the water of oxygen and make it difficult for anything to survive (History, 2014).  Pollution is not only harmful to the aquatic environments but can affect humans as well. As mentioned previously, there was a hold on swimming and fishing for years until testing proved it to be safe again. There were major upgrades made to the Syracuse wastewater treatment plant that have effectively removed many pollutants from the wastewater entering Onondaga Lake. Fishing reopened in 1986 with some consumption advisories still in effect, and contact recreation is considered possible in some parts of the lake (Onondaga Lake - NYS Dept. of Environmental Conservation, n.d.).  
+ 
+Legacy pollution and municipal wastewater pollution in Onondaga Lake took a part of the Haudenosaunees’ identity away. Originally, the lake provided a connection to the environment and other people, nourishment, and food for the people that cared so much for it, but those uses was eventually taken away by effects of industrialization and urbanization. Today, cleanup efforts continue under the Clean Water Act. Actions are being taken by private companies that contributed to the industrial pollution in addition to changes in the city’s infrastructure that contribute to the overwhelmed wastewater treatment centers. Although the remediation efforts should allow for increased use of Onondaga Lake, people will remember how polluted the lake was and their perceptions of the lake may never change. The Onondaga and Haudenosaunee people continue to see this lake as a crucial part of their history and serve as enduring stewards for the environment along with those who live in communities surrounding the lake. Remediation efforts must continue to fix our predecessors mistakes and make the lake better for future generations.  
+  
+  
+  
+  
+ 
+### References:  
+* Ferguson, B. M. (2020, May 12). Onondaga Lake: A History of Pollution and Toxic Waste. ArcGIS StoryMaps. https://storymaps.arcgis.com/stories/5568caa925a24af88f115de3b024e750  
+
+* Onondaga Lake Watershed History. (2014, February 18). Onondaga Environmental Institute. https://www.oei2.org/our-watershed/history/  
+
+* Onondaga Lake. Onondaga Nation. https://www.onondaganation.org/land-rights/onondaga-lake/  
+
+* Superfund Site Profile. (n.d.). https://cumulis.epa.gov/supercpad/SiteProfiles/index.cfm?fuseaction=second.cleanup&id=0203382#Status  
+
+* Onondaga Lake—NYS Dept. Of Environmental Conservation. (n.d.). https://www.dec.ny.gov/lands/72771.html

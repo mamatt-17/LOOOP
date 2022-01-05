@@ -1,0 +1,14 @@
+name: LOOOP
+title: LOOOP
+username:
+account: looop
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5397992
+bundleId: 5437372
+url: https://looop.shinyapps.io/LOOOP/
+when: 1641404447.53605
+lastSyncTime: 1641404447.53605
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: assessed_profs-1.rdata|Coordinates.cpg|Coordinates.csv|Coordinates.dbf|Coordinates.prj|Coordinates.shp|Coordinates.shx|Coordinates.xlsx|Sites.qgz|CSV_files
