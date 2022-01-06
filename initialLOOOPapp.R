@@ -6,7 +6,7 @@
 
 
 # Load packages and Set Working Directory----
-my_packages <- c("lubridate", "plyr", "openxlsx", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "ggvis", "RSQLite","knitr","rLakeAnalyzer")
+my_packages <- c("lubridate", "plyr", "openxlsx", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "ggvis", "RSQLite","knitr")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
@@ -15,8 +15,6 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 # Load data files from initial data workup file (looop_data)
 source("looop_data.R")
 
-param_choices <- c("Temp", "SC", "pH", "DO", "Tn", "Chl")
-names(param_choices) <- c("Temperature", "Specific Conductance","pH","Dissolved Oxygen","Turbidity","Chlorophyll-a")
 
 # Create User Interface (UI)----
 ui <-fluidPage(
@@ -36,29 +34,38 @@ navlistPanel("Data Explorer",
              tabPanel("Application",
 # Setting up interface using fluid grid system (12 columns across)
                       fluidRow(
-# In columns 1-5, map of area with clickable data points will appear
-  column(5, h4("Click a site"),
-         shinycssloaders::withSpinner(leaflet::leafletOutput("mymap"))
+# In columns 1-5, map of area with data points will appear
+  column(5,
+         leafletOutput("mymap")
          ),
 
 # In columns 6-8, data filter/inputs for graphing will appear
   column(3,
          wellPanel(
 # Overall Title
-           h4("Plot options"),
+           h4("Filter"),
 # Time Range Slider
-           uiOutput("date_slider"),
-# Selection for Parameter
-           selectInput("param_choices", label = "Parameter:",
-                       choices = param_choices
+           sliderInput("year","Year(s)",2000,2010,
+                       value = c(2001, 2009), sep = ""),
+# Checkboxes for Sites
+           checkboxGroupInput("site","Site(s)",
+                       choices = list("B148"= "B148","B211"="B211","B143"="B143","B22"="B22","B224"="B224","B266"="B266","B317"="B317","B409"="B409","B430"="B430","CROSS"="CROSS"),
+                       selected = 1
                        ),
-checkboxInput("show_dates", label = "Show all profile dates", value = TRUE)
+# Checkboxes for Depths
+           checkboxGroupInput("depth","Depth(s) (meters)",
+                      choices = list("1"=1,"2"=2, "3" = 3, "4" = 4, "5" = 5, "6"=6,"7"=7,"8"=8,"9"=9,"10"=10,"11"=11,"12"=12,"13"=13,"14"=14,"15"=15,"16"=16),
+                      selected = 1
+           )
 )
 ),
 # Output from selections, in columns 9-12
 column(4,
 # Plot graph
-       plotOutput("isopleths")
+       #ggvisOutput("plot1"),
+# Print text of selected objects
+       verbatimTextOutput("sitename"),
+       verbatimTextOutput("depths")
        )
 )
 ), # End of Application Sub-tab
@@ -123,13 +130,23 @@ tabPanel("Credits, Policy and Contact Information", icon = icon("question-circle
 
 # Create server function (response to UI)----
 server <- function(input, output, session){
-  
-  reactive_objects = reactiveValues()
-  
-  mymap <- createLeafletMap(session, "mymap")
-
-session$onFlushed(once= T, function(){
-  output$mymap <- renderLeaflet({
+  #vis <- reactive({
+   # yvar_name <- names(axis_vars)[axis_vars == input$yvar]
+    #xvar_name <- names(axis_vars)[axis_vars ]
+    #yvar <- prop("y",as.symbol(input$yvar))
+    
+#  data %>%
+ #   ggvis(x = xvar, y = yvar) %>%
+  #  layer_points(size := 50, size.hover := 200,
+   #              fillOpacity := 0.2, fillOpacity.hover := 0.5,
+    #             stroke = ~System) %>%
+    #add_tooltip(ttip, "hover") %>%
+    #add_axis("y", title = yvar_name) %>%
+    #add_legend("stroke", title = "System", values = c("ONR","OSWR","SR"))%>%
+    #set_options(width = 500,height = 500)
+    #})
+  #vis %>% bind_shiny("plot1")
+output$mymap <- renderLeaflet({
   leaflet() %>%
     addProviderTiles(providers$Stamen.Terrain,
                      options = providerTileOptions(noWrap = TRUE)
@@ -145,65 +162,8 @@ session$onFlushed(once= T, function(){
     )
 })
 
-  })
-
-  observe({
-    site_click <- input$map_marker_click
-    if(is.null(site_click))
-      {return()}
-    siteid = site_click$Site
-    reactive_objects$sel_mlid = siteid})
-    
-  observe({
-    req(reactive_objects$sel_mlid)
-    reactive_objects$sel_profiles=data_long[data_long$Site==reactive_objects$sel_mlid,]
-    profile_dates = unique(reactive_objects$sel_profiles$Date)
-    profile_dates = profile_dates[order(profile_dates)]
-    reactive_objects$profile_dates = profile_dates
-  })
-  
-  output$date_slider <- renderUI({
-    req(reactive_objects$profile_dates)
-    date_min = min(reactive_objects$profile_dates)
-    date_max = max(reactive_objects$profile_dates)
-    sliderInput("date_slider","Date range:", min = date_min, max = date_max, value = c(date_min,date_max))
-  })
-  
-  output$isopleth = renderPlot({
-    req(reactive_objects$sel_profs_wide, reactive_objects$sel_profiles)
-    if(dim(reactive_objects$sel_profs_wide)[1]>0){
-      if(length(unique(reactive_objects$sel_profs_wide$Date))==1){
-        plot.new()
-        text(0.5,0.5, "Only one profile date available, cannot interpolate.")
-        box()
-      }
-      else{
-        if(input$param_choices=="DO"){
-          name = "Dissolved Oxygen"
-          parameter = "DO_mgL"
-          param_units= "mg/L"
-          param_lab = "Dissolved oxygen"
-        }
-        if(input$param_choices=="pH"){
-          name = "pH"
-          parameter = "pH"
-          param_units= ""
-          param_lab = "pH"
-        }
-        if(input$param_choices=="Temp"){
-          name = "Temperature"
-          parameter = "Temp_degC"
-          param_units= "deg C"
-          param_lab = "Temperature"
-        }
-      if(input$show_dates){show_dates = TRUE}else{show_dates = FALSE}
-      profileHeatMap(reactive_objects$sel_profs_wide, parameter = parameter, param_units = param_units, param_lab = param_lab, 
-                     depth = "Depth_m", depth_units = "m", criteria = 1, show_dates = show_dates)
-      }
-    }
-  })
-  
-  
+  output$sitename <- renderPrint({input$site})
+output$depths <- renderPrint({input$depth})
 }
 ## Run app----
 shinyApp(ui = ui, server = server)

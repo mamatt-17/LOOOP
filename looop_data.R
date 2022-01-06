@@ -69,7 +69,8 @@ b1 <- b[!(is.na(b$Temp)) | !(is.na(b$SC)) | !(is.na(b$pH)) | !(is.na(b$DO))| !(i
 
 
 b2 <- b1 %>% mutate(
-    year = year(Date)
+    year = year(Date),
+    
 )
 
 
