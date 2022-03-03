@@ -2,7 +2,7 @@
 # You can run the application by clicking the 'Run App' button above; large application so it may not load
 # Note, when the application is running you have to press the Stop button in order to run additional code.
 
-# Use shinyApp() to print application; images will not load using this function
+# Use shinyApp() to print application; images may not load using this function
 
 
 # Load packages and Set Working Directory----
