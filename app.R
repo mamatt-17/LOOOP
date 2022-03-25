@@ -6,14 +6,13 @@
 
 
 # Load packages and Set Working Directory----
-my_packages <- c("lubridate", "plyr", "openxlsx", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "ggvis", "RSQLite","knitr","rLakeAnalyzer")
+my_packages <- c("lubridate", "plyr", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "ggvis", "RSQLite","knitr","rLakeAnalyzer")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Initial Setup for Application----
 
 # Load data files from initial data workup file (looop_data)
-source("looop_data.R")
 
 param_choices <- c("Temp", "SC", "pH", "DO", "Tn", "Chl")
 names(param_choices) <- c("Temperature", "Specific Conductance","pH","Dissolved Oxygen","Turbidity","Chlorophyll-a")
@@ -124,10 +123,26 @@ tabPanel("Credits, Policy and Contact Information", icon = icon("question-circle
 # Create server function (response to UI)----
 server <- function(input, output, session){
   
+# Create Dialog Box to keep user from reloading page
+  showModal(modalDialog(title= "MAP LOADING","Please wait for map to draw before proceeding.",sixe = "1",footer = NULL))
+
+  # Remove Loading Dialog Box when map has been drawn
+  observe({
+    req(mymap)
+    removeModal()
+  })
+
+# Set up app with data and defining objects----
+  load("~/GitHub/LOOOP/looop.rdata")
+  
+# Defining reactive objects
+  
   reactive_objects = reactiveValues()
   
+# Map Set Up----
   mymap <- createLeafletMap(session, "mymap")
 
+# Draw Map with markers at data sites, set View of map to area of interest upon loading
 session$onFlushed(once= T, function(){
   output$mymap <- renderLeaflet({
   leaflet() %>%
@@ -138,22 +153,25 @@ session$onFlushed(once= T, function(){
       lat= 43.248,
       zoom = 9
     ) %>% addCircleMarkers(
-      lng = buoy.coord$long,
-      lat = buoy.coord$lat,
-      popup = buoy.coord$station.code,
+      lng = b3$long,
+      lat = b3$lat,
+      popup = b3$Station,
       labelOptions = labelOptions(textsize = "15px")
     )
 })
 
   })
 
+# Reactivity----
+# When site on map is clicked, the site ID will appear in box on the map screen and tell plot which site to select----
   observe({
     site_click <- input$map_marker_click
     if(is.null(site_click))
       {return()}
     siteid = site_click$Site
     reactive_objects$sel_mlid = siteid})
-    
+
+# When site is selected, data from that site should appear as options to select from----  
   observe({
     req(reactive_objects$sel_mlid)
     reactive_objects$sel_profiles=data_long[data_long$Site==reactive_objects$sel_mlid,]
@@ -161,14 +179,16 @@ session$onFlushed(once= T, function(){
     profile_dates = profile_dates[order(profile_dates)]
     reactive_objects$profile_dates = profile_dates
   })
-  
+
+# When date slider is changed, the minimum and maximum dates are shown-----
   output$date_slider <- renderUI({
     req(reactive_objects$profile_dates)
     date_min = min(reactive_objects$profile_dates)
     date_max = max(reactive_objects$profile_dates)
     sliderInput("date_slider","Date range:", min = date_min, max = date_max, value = c(date_min,date_max))
   })
-  
+
+# Create an isopleth (heatmap) based on the water quality parameters selected and number of data points available for that site----  
   output$isopleth = renderPlot({
     req(reactive_objects$sel_profs_wide, reactive_objects$sel_profiles)
     if(dim(reactive_objects$sel_profs_wide)[1]>0){

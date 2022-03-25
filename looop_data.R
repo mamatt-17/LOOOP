@@ -1,7 +1,7 @@
 # Script for cleaning and formatting data to be used with LOOOP Shiny page
 
 # Set working directory and load packages----
-my_packages <- c("lubridate", "plyr", "dplyr","ggpubr","tidyr")
+my_packages <- c("lubridate", "plyr", "dplyr","ggpubr","tidyr", "rLakeAnalyzer")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
@@ -43,7 +43,7 @@ b$tp <- as.factor(as.character(b$tp))
     # Factor stations and add coordinates
 b$station.code <- as.factor(as.character(b$station.code))
 buoy.coord <-as.data.frame(unique(b$station.code))
-names(buoy.coord) <-c("station.code")
+names(buoy.coord) <-c("Station")
 buoy.coord$lat <-c(43.240093,43.44995,43.205123,43.231178,43.193388,43.139376,43.147516,43.103883,43.100510,43.108055)
 buoy.coord$long <- c(-76.147568,-76.50349,-76.269799,-76.309791,-76.279911,-76.238025,-76.314771,-76.445725,-76.499537,-76.475456)
 #unique(b[c("system.code","station.code")],) # Check that the buoys are in the right river
@@ -69,9 +69,10 @@ b1 <- b[!(is.na(b$Temp)) | !(is.na(b$SC)) | !(is.na(b$pH)) | !(is.na(b$DO))| !(i
 
 
 b2 <- b1 %>% mutate(
-    year = year(Date),
-    
+    year = year(Date)
 )
+
+b3 <- b2 %>% right_join(buoy.coord)
 
 
 
@@ -101,3 +102,5 @@ s.check<- plyr::ddply(b1, .variables = .(Station), plyr::summarize,
     # D. Oneida Lake----   
     
 # Save final file as .rdata for easier read into app----
+
+save(b3, file = "looop.rdata")
