@@ -5,8 +5,10 @@
 # Use shinyApp() to print application; images may not load using this function
 
 
+
 # Load packages and Set Working Directory----
-my_packages <- c("lubridate", "plyr", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "ggvis", "RSQLite","knitr","rLakeAnalyzer")
+#devtools::install_github("utah-dwq/wqTools")
+my_packages <- c("lubridate", "plyr", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "ggvis", "RSQLite","knitr","wqTools")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
@@ -16,6 +18,10 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 param_choices <- c("Temp", "SC", "pH", "DO", "Tn", "Chl")
 names(param_choices) <- c("Temperature", "Specific Conductance","pH","Dissolved Oxygen","Turbidity","Chlorophyll-a")
+
+#site_choices <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430", "CROSS")
+
+#depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
 # Create User Interface (UI)----
 ui <-fluidPage(
@@ -35,30 +41,37 @@ navlistPanel("Data Explorer",
              tabPanel("Application",
 # Setting up interface using fluid grid system (12 columns across)
                       fluidRow(
-# In columns 1-5, map of area with clickable data points will appear
-  column(5, h4("Click a site"),
+# In columns 1-3, map of area with clickable data points will appear
+  column(3, h4("Click a site for more information"),
          shinycssloaders::withSpinner(leaflet::leafletOutput("mymap"))
          ),
 
-# In columns 6-8, data filter/inputs for graphing will appear
+# In columns 4-7, data filter/inputs for graphing will appear
   column(3,
          wellPanel(
 # Overall Title
            h4("Plot options"),
-# Time Range Slider
-           uiOutput("date_slider"),
+# Selection for Station
+selectInput("site_choices", label = "Station:",
+            choices = unique(b3$Station,)
+),
 # Selection for Parameter
            selectInput("param_choices", label = "Parameter:",
                        choices = param_choices
                        ),
-checkboxInput("show_dates", label = "Show all profile dates", value = TRUE)
-)
+# Selection for Depths
+selectInput("depth", label = "Depth(s):",
+                   choices = NULL),
+# Time Range Slider
+uiOutput("date_slider"),
+#checkboxInput("show_dates", label = "Show all profile dates", value = TRUE)
 ),
-# Output from selections, in columns 9-12
-column(4,
+uiOutput("unique_dates")
+),
+# Output from selections, in columns 8-12
+column(5,
 # Plot graph
-       plotOutput("isopleths")
-       )
+       plotOutput("plot"))
 )
 ), # End of Application Sub-tab
 
@@ -68,7 +81,7 @@ tabPanel("User's Guide",
          ), # End of How-To Sub-tab
 
 # Third side-panel navigational tab (Meta Data)
-tabPanel("Metadata",
+tabPanel("About the Data",
          h4(p("Coming Soon"))
          ), # End of Meta sub-tab
 # Set side-panel width (2) and Nav list panel (10) widths using fluid grid system
@@ -108,8 +121,8 @@ navbarMenu("Topics", icon = icon("lightbulb"),
 tabPanel("About LOOOP", icon = icon("info-circle"), 
 fluidRow(column(6,
                 includeMarkdown("StaticPosts/About.Rmd")),
-         column(6,
-                img(src = "~/logo_looop.png", width = "20px",height = "20px"))
+         column(6,align = "center",
+                img(src = "logo_looop.png", width = "400px",height = "400px"))
          )
 ), # End of About tab
 
@@ -124,7 +137,7 @@ tabPanel("Credits, Policy and Contact Information", icon = icon("question-circle
 server <- function(input, output, session){
   
 # Create Dialog Box to keep user from reloading page
-  showModal(modalDialog(title= "MAP LOADING","Please wait for map to draw before proceeding.",sixe = "1",footer = NULL))
+  showModal(modalDialog(title= "MAP LOADING","Please wait for map to draw before proceeding.",size = "l",footer = NULL))
 
   # Remove Loading Dialog Box when map has been drawn
   observe({
@@ -133,11 +146,13 @@ server <- function(input, output, session){
   })
 
 # Set up app with data and defining objects----
-  load("~/GitHub/LOOOP/looop.rdata")
+  #load("~/GitHub/LOOOP/looop.rdata")
+  load("//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/looop.rdata")
   
 # Defining reactive objects
   
   reactive_objects = reactiveValues()
+  
   
 # Map Set Up----
   mymap <- createLeafletMap(session, "mymap")
@@ -155,7 +170,10 @@ session$onFlushed(once= T, function(){
     ) %>% addCircleMarkers(
       lng = b3$long,
       lat = b3$lat,
-      popup = b3$Station,
+      popup = paste0(
+                    "Station: ",b3$Station, "<br>",
+                    "Depth(s): ",b3$U.Depths, "<br>",
+                    "Year(s): ",b3$U.Years),
       labelOptions = labelOptions(textsize = "15px")
     )
 })
@@ -163,68 +181,60 @@ session$onFlushed(once= T, function(){
   })
 
 # Reactivity----
-# When site on map is clicked, the site ID will appear in box on the map screen and tell plot which site to select----
-  observe({
-    site_click <- input$map_marker_click
-    if(is.null(site_click))
-      {return()}
-    siteid = site_click$Site
-    reactive_objects$sel_mlid = siteid})
+# Filtering depth choices based on selected site
+site_choices <- reactive({
+  filter(b5, Station == input$site_choices)
+})
+observeEvent(site_choices(),{
+  choices <- unique(site_choices()$Depth)
+  updateSelectInput(inputId = "depth", choices = choices)
+})
 
-# When site is selected, data from that site should appear as options to select from----  
-  observe({
-    req(reactive_objects$sel_mlid)
-    reactive_objects$sel_profiles=data_long[data_long$Site==reactive_objects$sel_mlid,]
-    profile_dates = unique(reactive_objects$sel_profiles$Date)
-    profile_dates = profile_dates[order(profile_dates)]
-    reactive_objects$profile_dates = profile_dates
-  })
+depth <- reactive({
+  req(input$depth)
+  filter(site_choices(), Depth == input$depth)
+})
 
-# When date slider is changed, the minimum and maximum dates are shown-----
+
+# When station is selected, date slider that controls the X axis appears
   output$date_slider <- renderUI({
-    req(reactive_objects$profile_dates)
-    date_min = min(reactive_objects$profile_dates)
-    date_max = max(reactive_objects$profile_dates)
-    sliderInput("date_slider","Date range:", min = date_min, max = date_max, value = c(date_min,date_max))
+    req(input$site_choices)
+    date_min = min(site_choices()$Date)
+    date_max = max(site_choices()$Date)
+    sliderInput("date_slider","Date range:", min = date_min, max = date_max, value = c(date_min,date_max),timeFormat = "%m-%d-%Y")
   })
 
-# Create an isopleth (heatmap) based on the water quality parameters selected and number of data points available for that site----  
-  output$isopleth = renderPlot({
-    req(reactive_objects$sel_profs_wide, reactive_objects$sel_profiles)
-    if(dim(reactive_objects$sel_profs_wide)[1]>0){
-      if(length(unique(reactive_objects$sel_profs_wide$Date))==1){
-        plot.new()
-        text(0.5,0.5, "Only one profile date available, cannot interpolate.")
-        box()
-      }
-      else{
-        if(input$param_choices=="DO"){
-          name = "Dissolved Oxygen"
-          parameter = "DO_mgL"
-          param_units= "mg/L"
-          param_lab = "Dissolved oxygen"
-        }
-        if(input$param_choices=="pH"){
-          name = "pH"
-          parameter = "pH"
-          param_units= ""
-          param_lab = "pH"
-        }
-        if(input$param_choices=="Temp"){
-          name = "Temperature"
-          parameter = "Temp_degC"
-          param_units= "deg C"
-          param_lab = "Temperature"
-        }
-      if(input$show_dates){show_dates = TRUE}else{show_dates = FALSE}
-      profileHeatMap(reactive_objects$sel_profs_wide, parameter = parameter, param_units = param_units, param_lab = param_lab, 
-                     depth = "Depth_m", depth_units = "m", criteria = 1, show_dates = show_dates)
-      }
-    }
+# Create new data frame that reacts to user selections
+  selectedData <- reactive({
+    b5[c(input$site_choices,input$param_choices, input$depth),]
   })
   
   
+  # Create a timeseries plot based on the selected options----  
+  output$plot = renderPlot({
+    
+        ggplot(data = selectedData(), mapping = aes(x = Datetime, y = value))+
+          geom_point(size = 2)+
+          geom_line()+
+          theme_minimal()+
+          #scale_y_continuous(name =  name,
+           #                  limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
+            #                 breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
+        #  scale_x_datetime(name = "Date",
+         #                  date_breaks = "1 month",
+          #                 date_labels = "%b %y",
+           #                date_minor_breaks = "1 day")+
+          theme(
+            panel.border = element_rect(color = "black", fill = NA, size = 1),
+            axis.ticks = element_line(color = "black", size = 1),
+            axis.text = element_text(size = 12)
+          )
+      })
 }
+
+
+  
+
 ## Run app----
 shinyApp(ui = ui, server = server)
 #runApp()

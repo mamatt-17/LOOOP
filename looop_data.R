@@ -74,33 +74,88 @@ b2 <- b1 %>% mutate(
 
 b3 <- b2 %>% right_join(buoy.coord)
 
+u.b <- data.frame(unique(b3[c("Station","Depth","year")]))
+
+u.b <- u.b[order(u.b$Depth),]
+
+u.b <- u.b %>% group_by(Station) %>% 
+  summarise_all(funs(trimws(paste(., collapse = ", "))))
+
+u.b2 <- as.data.frame(unique(u.b$Station))
+u.b2$U.Depths <- c("2-5 meters","2 meters","2-3 meters","1-3 meters","1-4 meters","1-6 meters","1-7 meters","1-6 meters","1-4 meters","1-16 meters")
+u.b2$U.Years <- c("2008, 2009",
+                  "2008, 2009",
+                  "2008, 2009",
+                  "2008, 2009",
+                  "2002, 2003, 2008, 2009",
+                  "2000 , 2006",
+                  "2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009",
+                  "2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009",
+                  "2004, 2005, 2006, 2007, 2008, 2009",
+                  "2006, 2009")
+names(u.b2) <- c("Station","U.Depths","U.Years")
+b3 <- b3 %>% right_join(u.b2) %>% select(!c(System))
+
+# Separate dataframe by Station and fill in time gaps with NAs
+station_split <- split(b3,b3$Station)
+station_names <- as.character(unique(b3$Station))
+
+for(i in 1:length(station_split)){
+  assign(station_names[i],station_split[[i]])
+}
+
+B143 <- B143 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B148 <- B148 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B211 <- B211 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B22 <- B22 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B224 <- B224 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B266 <- B266 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B317 <- B317 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B409 <- B409 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B430 <- B430 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+CROSS <- CROSS %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
 
 
+# Recombine Station dataframes for complete dataframe that can be used to show holes in plots
+b4 <- rbind(B143,B148,B211,B22,B224,B266,B317,B409,B430,CROSS)
 
-s.check<- plyr::ddply(b1, .variables = .(Station), plyr::summarize,
-                      t = mean(Temp, na.rm = T),
-                      tmin = min(Temp, na.rm = T),
-                      tmax = max(Temp, na.rm = T),
-                      sc = mean(SC, na.rm = T),
-                      scmin = min(SC, na.rm = T),
-                      scmax = max(SC, na.rm = T),
-                      pH = mean(pH, na.rm = T),
-                      pHmin = min(pH, na.rm = T),
-                      pHmax = max(pH, na.rm = T),
-                      DO = mean(DO, na.rm = T),
-                      DOmin = min(DO, na.rm = T),
-                      DOmax = max(DO, na.rm = T),
-                      Tn = mean(Tn, na.rm = T),
-                      Tnmin = min(Tn, na.rm = T),
-                      Tnmax = max(Tn, na.rm = T),
-                      Chl = mean(Chl, na.rm = T),
-                      Chlmin = min(Chl, na.rm = T),
-                      Chlmax = max(Chl, na.rm = T))
+b4 <- b4 %>% mutate(Abs.Time = replace_na(Abs.Time, "00:00:00")) %>% mutate(Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M"))
 
-    # C. Lake Ontario----
+b5 <- b4 %>% pivot_longer(.,c(Temp,SC,pH,DO,Tn,Chl), names_to = "params",values_to = "value")
+
+b5$Depth <- as.factor(as.character(b5$Depth))
+b5$params <- as.factor(as.character(b5$params))
+
+
+# TESTING PLOT CODE FOR APP
+b6 <- b5 %>% filter(Station == "B211",params=="Temp",Depth == "2") %>% 
+  complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
+  fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>% 
+  mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
+         Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" ))
+
+ggplot(data = b6, mapping = aes(x = Datetime, y = value))+
+  geom_point(size = 2)+
+  geom_line()+
+  theme_minimal()+
+scale_y_continuous(name =  "Temperature (deg. C)",
+                   limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
+                   breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
+scale_x_datetime(name = "Date",
+                 date_breaks = "1 month",
+                 date_labels = "%b %y",
+                 date_minor_breaks = "1 day")+
+  theme(
+    panel.border = element_rect(color = "black", fill = NA, size = 1),
+    axis.ticks = element_line(color = "black", size = 1),
+    axis.text = element_text(size = 12)
+  )
+
+
+# C. Lake Ontario----
 
     # D. Oneida Lake----   
     
 # Save final file as .rdata for easier read into app----
 
-save(b3, file = "looop.rdata")
+save(b5, file = "looop.rdata")
