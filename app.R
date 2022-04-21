@@ -8,7 +8,7 @@
 
 # Load packages and Set Working Directory----
 #devtools::install_github("utah-dwq/wqTools")
-my_packages <- c("lubridate", "plyr", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "ggvis", "RSQLite","knitr","wqTools")
+my_packages <- c("lubridate", "plyr", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "scales", "RSQLite","knitr","shinycssloaders","shinydashboardPlus")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
@@ -19,7 +19,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 param_choices <- c("Temp", "SC", "pH", "DO", "Tn", "Chl")
 names(param_choices) <- c("Temperature", "Specific Conductance","pH","Dissolved Oxygen","Turbidity","Chlorophyll-a")
 
-#site_choices <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430", "CROSS")
+sites <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430", "CROSS")
 
 #depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
@@ -51,14 +51,14 @@ navlistPanel("Data Explorer",
          wellPanel(
 # Overall Title
            h4("Plot options"),
-# Selection for Station
-selectInput("site_choices", label = "Station:",
-            choices = unique(b3$Station,)
-),
-# Selection for Parameter
+           # Selection for Parameter
            selectInput("param_choices", label = "Parameter:",
                        choices = param_choices
-                       ),
+           ),
+           # Selection for Station
+selectInput("site_choices", label = "Station:",
+            choices = sites
+),
 # Selection for Depths
 selectInput("depth", label = "Depth(s):",
                    choices = NULL),
@@ -71,13 +71,13 @@ uiOutput("unique_dates")
 # Output from selections, in columns 8-12
 column(5,
 # Plot graph
-       plotOutput("plot"))
+       shinycssloaders::withSpinner(plotOutput("plot")))
 )
 ), # End of Application Sub-tab
 
 # Second side-panel navigational tab (User's Guide)
 tabPanel("User's Guide",
-         h4(p("Coming Soon"))
+         includeMarkdown("StaticPosts/UserGuide.Rmd")
          ), # End of How-To Sub-tab
 
 # Third side-panel navigational tab (Meta Data)
@@ -118,16 +118,17 @@ navbarMenu("Topics", icon = icon("lightbulb"),
            ), # End of Topics tab
 
   # About LOOOP tab----
-tabPanel("About LOOOP", icon = icon("info-circle"), 
+tabPanel("About LOOOP", icon = icon("question-circle"), 
 fluidRow(column(6,
-                includeMarkdown("StaticPosts/About.Rmd")),
+                includeMarkdown("StaticPosts/About.Rmd"),
+                socialButton(href = "https://www.instagram.com/lake_looop/", icon = icon("instagram", "fa-5x"))),
          column(6,align = "center",
                 img(src = "logo_looop.png", width = "400px",height = "400px"))
          )
 ), # End of About tab
 
   # Credits and Privacy Policy tab----
-tabPanel("Credits, Policy and Contact Information", icon = icon("question-circle"),
+tabPanel("Credits and Privacy Policy", icon = icon("info-circle"),
          h4(p("Coming Soon"))
 ) #End of Policy tab
 ) # End of NavBarpage
@@ -137,13 +138,14 @@ tabPanel("Credits, Policy and Contact Information", icon = icon("question-circle
 server <- function(input, output, session){
   
 # Create Dialog Box to keep user from reloading page
-  showModal(modalDialog(title= "MAP LOADING","Please wait for map to draw before proceeding.",size = "l",footer = NULL))
+  showModal(modalDialog(title= "Welcome to the LOOOP!", 
+                        "Use the Plot Options to begin exploring the data collected by the Upstate Freshwater Institute and use the tabs on the Navigation Bar to learn more about the Lake Ontario Watershed.
+                        Click outside of this box to get started!",
+                        size = "l",
+                        easyClose = TRUE,
+                        footer = NULL))
 
-  # Remove Loading Dialog Box when map has been drawn
-  observe({
-    req(mymap)
-    removeModal()
-  })
+ 
 
 # Set up app with data and defining objects----
   #load("~/GitHub/LOOOP/looop.rdata")
@@ -168,25 +170,27 @@ session$onFlushed(once= T, function(){
       lat= 43.248,
       zoom = 9
     ) %>% addCircleMarkers(
-      lng = b3$long,
-      lat = b3$lat,
+      lng = mapframe$long,
+      lat = mapframe$lat,
       popup = paste0(
-                    "Station: ",b3$Station, "<br>",
-                    "Depth(s): ",b3$U.Depths, "<br>",
-                    "Year(s): ",b3$U.Years),
+                    "Station: ",mapframe$Station, "<br>",
+                    "Depth(s): ",mapframe$U.Depths, "<br>",
+                    "Year(s): ",mapframe$U.Years),
       labelOptions = labelOptions(textsize = "15px")
     )
 })
 
   })
 
-# Reactivity----
-# Filtering depth choices based on selected site
+
+
+# REACTIVITY----
+# Filtering depth choices based on selected site----
 site_choices <- reactive({
   filter(b5, Station == input$site_choices)
 })
 observeEvent(site_choices(),{
-  choices <- unique(site_choices()$Depth)
+  choices <- unique(na.omit(site_choices()$Depth))
   updateSelectInput(inputId = "depth", choices = choices)
 })
 
@@ -196,7 +200,7 @@ depth <- reactive({
 })
 
 
-# When station is selected, date slider that controls the X axis appears
+# When station is selected, date slider that controls the X axis appears----
   output$date_slider <- renderUI({
     req(input$site_choices)
     date_min = min(site_choices()$Date)
@@ -204,30 +208,32 @@ depth <- reactive({
     sliderInput("date_slider","Date range:", min = date_min, max = date_max, value = c(date_min,date_max),timeFormat = "%m-%d-%Y")
   })
 
-# Create new data frame that reacts to user selections
+# Create new data frame that reacts to user selections and will update the plot code----
   selectedData <- reactive({
-    b5[c(input$site_choices,input$param_choices, input$depth),]
+    b5 %>% filter(Station == input$site_choices,params==input$param_choices,Depth == input$depth, Datetime >= input$date_slider[1], Datetime <= input$date_slider[2]) %>% 
+      complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
+      fill(c(Station, Depth, params,lat, long, U.Depths, U.Years, Ylabel))%>% 
+      mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
+             Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" )
+             )
   })
   
-  
-  # Create a timeseries plot based on the selected options----  
-  output$plot = renderPlot({
-    
-        ggplot(data = selectedData(), mapping = aes(x = Datetime, y = value))+
+ # Create a timeseries plot based on the selected options----  
+  output$plot = renderPlot(
+    {req(input$date_slider)
+    # Plotting Information
+  ggplot(data = selectedData(), mapping = aes(x = Datetime, y = value))+
           geom_point(size = 2)+
           geom_line()+
           theme_minimal()+
-          #scale_y_continuous(name =  name,
-           #                  limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
-            #                 breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
-        #  scale_x_datetime(name = "Date",
-         #                  date_breaks = "1 month",
-          #                 date_labels = "%b %y",
-           #                date_minor_breaks = "1 day")+
+          scale_y_continuous(name =  selectedData()$Ylabel,
+                             limits = c(floor(min(selectedData()$value, na.rm = T)),ceiling(max(selectedData()$value,na.rm = T))),
+                             breaks = pretty_breaks())+
+          scale_x_datetime(name = "Date")+
           theme(
             panel.border = element_rect(color = "black", fill = NA, size = 1),
             axis.ticks = element_line(color = "black", size = 1),
-            axis.text = element_text(size = 12)
+            axis.text = element_text(size = 15)
           )
       })
 }

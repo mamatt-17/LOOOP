@@ -126,8 +126,31 @@ b5 <- b4 %>% pivot_longer(.,c(Temp,SC,pH,DO,Tn,Chl), names_to = "params",values_
 b5$Depth <- as.factor(as.character(b5$Depth))
 b5$params <- as.factor(as.character(b5$params))
 
+b5 <- b5 %>% mutate(Ylabel = case_when(
+  stri_detect_regex(params, "Temp") ~ "Temperature (°C)",
+  stri_detect_regex(params, "SC") ~ "Specific Conductance (µS/cm)",
+  stri_detect_regex(params, "pH") ~ "pH (units)",
+  stri_detect_regex(params, "DO") ~ "Dissolved Oxygen (mg/l)",
+  stri_detect_regex(params, "Tn") ~ "Turbidity (NTU)",
+  stri_detect_regex(params, "Chl") ~ "Chlorophyll-a (µg/l)"
+))
 
-# TESTING PLOT CODE FOR APP
+
+b5 <- b5 %>% group_by(Station)%>% arrange(Depth, .by_group = TRUE)
+
+
+
+# Saving a smaller dataframe for the map----
+mapframe <- as.data.frame(unique(b5[c("Station","U.Depths","lat","long","U.Years")]))
+# C. Lake Ontario----
+
+    # D. Oneida Lake----   
+    
+# Save final file as .rdata for easier read into app----
+
+save(b5, mapframe, file = "looop.rdata")
+
+# TESTING PLOT CODE FOR APP----
 b6 <- b5 %>% filter(Station == "B211",params=="Temp",Depth == "2") %>% 
   complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
   fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>% 
@@ -138,24 +161,15 @@ ggplot(data = b6, mapping = aes(x = Datetime, y = value))+
   geom_point(size = 2)+
   geom_line()+
   theme_minimal()+
-scale_y_continuous(name =  "Temperature (deg. C)",
-                   limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
-                   breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
-scale_x_datetime(name = "Date",
-                 date_breaks = "1 month",
-                 date_labels = "%b %y",
-                 date_minor_breaks = "1 day")+
+  scale_y_continuous(name =  "Temperature (deg. C)",
+                     limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
+                     breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
+  scale_x_datetime(name = "Date",
+                   date_breaks = "1 month",
+                   date_labels = "%b %y",
+                   date_minor_breaks = "1 day")+
   theme(
     panel.border = element_rect(color = "black", fill = NA, size = 1),
     axis.ticks = element_line(color = "black", size = 1),
     axis.text = element_text(size = 12)
   )
-
-
-# C. Lake Ontario----
-
-    # D. Oneida Lake----   
-    
-# Save final file as .rdata for easier read into app----
-
-save(b5, file = "looop.rdata")
