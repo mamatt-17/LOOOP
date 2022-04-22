@@ -1,0 +1,27 @@
+---
+title: "Credits-Policies"
+author: "Monica Matt"
+output:
+  html_document:
+    toc: TRUE
+---
+# Credits, Privacy Policy, and Licenses
+---  
+<style type = "text/css">
+  body{
+  font-size: 12pt;
+  }
+</style>
+## Credits  
+This web application was made possible by funding through the New York's Great Lakes Basin Small Grants Program (made possible by the New York State Environmental Protection Fund and Article 14 of Environmental Conservation Law) and by the National Oceanic and Atmospheric Administration's Bay Watershed Education and Training (B-WET) program.  
+  
+Content was developed by UFI staff and volunteers and workstudy students from the New York State College of Environmental Science and Forestry.  
+
+Application was made using R, RStudio and the following packages:  
+shiny, lubridate, plyr, dplyr, tidyr, ggplot2, leaflet, scales, knitr, shinycssloaders, shinydashboardPlus, stringi
+  
+## Privacy Policy  
+This site uses Google Analytics to understand and measure visitors' engagement with the application. Data collected includes: XYZ. Personal data are not collected nor used for tracking purposes. By using this application, the user is accepting these terms of data collection.  
+
+## Licenses  
+The purpose of this application is educational. Data and information displayed by this application is under the [Creative Commons Attribution 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/), allowing users to share and adapt the presented materials for non-commercial use. The underlying source code used to formal and display the content is licensed under the [MIT License](.

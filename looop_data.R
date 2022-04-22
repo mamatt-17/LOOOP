@@ -1,7 +1,7 @@
 # Script for cleaning and formatting data to be used with LOOOP Shiny page
 
 # Set working directory and load packages----
-my_packages <- c("lubridate", "plyr", "dplyr","ggpubr","tidyr", "rLakeAnalyzer")
+my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "stringi")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 

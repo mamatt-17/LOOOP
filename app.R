@@ -8,7 +8,7 @@
 
 # Load packages and Set Working Directory----
 #devtools::install_github("utah-dwq/wqTools")
-my_packages <- c("lubridate", "plyr", "dplyr","ggpubr",  "tidyr", "shiny","ggplot2","leaflet", "scales", "RSQLite","knitr","shinycssloaders","shinydashboardPlus")
+my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "shiny","ggplot2","leaflet", "scales", "knitr","shinycssloaders","shinydashboardPlus")
 lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
@@ -129,7 +129,7 @@ fluidRow(column(6,
 
   # Credits and Privacy Policy tab----
 tabPanel("Credits and Privacy Policy", icon = icon("info-circle"),
-         h4(p("Coming Soon"))
+         includeMarkdown("StaticPosts/Credits-Policies.Rmd")
 ) #End of Policy tab
 ) # End of NavBarpage
 ) # End of Fluid Page

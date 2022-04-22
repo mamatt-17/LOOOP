@@ -15,13 +15,20 @@ output:
   }
 </style>
 
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/GL-watershed_Borhorst_cropped.png" width="60%"/>  
-###### Figure 1. Areal view of the Great Lakes watershed (Picture by Borhorst, 2016) 
+<p align="center">
+<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/GL-watershed_Borhorst_cropped.png">  
+ <br>  
+  Areal view of the Great Lakes watershed (Picture by Borhorst, 2016) 
+
+</p>
 
 To understand current natural systems, it is crucial to know the factors that contributed to the formation of geomorphological features that we witness today. Geomorphology is the study of landforms and their evolution through physical, chemical, and biological processes. Topographic features such as hills, lakes, mountains, lakes, and rivers are dynamically formed over time, leaving evidence of their formation and seemingly permanent presence in the current landscape. The Great Lakes are an exceptional hydrologic phenomenon that holds great importance -- not only for the region, but for the whole country. Holding 85% of North America's fresh surface water and 20% of the world’s, these lakes are integral in understanding how we manage fresh water which is an ever depleting natural resource (Allen, 1975). The five lakes including Lake Superior, Lake Michigan, Lake Huron, Lake Erie, and Lake Ontario are interconnected, creating unique regional hydrologic patterns, which are potential gateways for invasive species to spread and a shared interest in ensuring water quality among the entire Great Lakes watershed. Four of the five Great Lakes are located between the United States and Canada; because of this, not only do the lakes create natural boundaries, but also serve as a cultural center.  
-
-![Figure 2. Earth's geologic timeline](//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/geologic-timeline.png)
-###### Figure 2. Earth's geologic timeline  
+  
+<p align="center">
+<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/geologic-timeline.png">  
+<br>
+  Earth's geologic timeline  
+</p>
 
 Beginning approximately 2.6 million years ago, Pleistocene glaciation started to shape the topography of the Great Lakes region; with multiple advances of continental glaciers from the North, powerful forces eroded the Silurian-age bedrock, producing terminal moraines (Bornhorst, 2016). Terminal moraines are ridges that mark the maximum size of glaciers or distance glaciers advanced, and are composed of  the sediment that was initially moved and trapped by the glacier's. This process helped form the unique geologic composition of sand, silts, clay, gravel and topography that we see in the Great Lakes region today. As the glaciers retreated, the melted water flowed to topographic depressions and lakes were formed by terminal moraines damming water.The sediment that was initially moved and trapped by the glaciers fell out and deposited at the basin of the newly formed lakes (Bornhorst, 2016).  
 
