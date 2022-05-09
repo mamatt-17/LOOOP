@@ -1,0 +1,20 @@
+---
+title: "About the Data"
+author: "Monica Matt"
+output:
+  html_document:
+    toc: TRUE
+---
+# About the Data
+---  
+<style type = "text/css">
+  body{
+  font-size: 12pt;
+  }
+</style>
+## What data was collected?
+
+## Where was it collected?
+
+## Why was the data collected?
+EMPACT (a grant program by XYZ) from 2000

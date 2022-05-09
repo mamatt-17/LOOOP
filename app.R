@@ -91,10 +91,10 @@ fluid = TRUE, widths = c(2,10))), # End of Data Explorer tab
 navbarMenu("Lake Characteristics", icon = icon("water"),
 # Options beneath "Lake Characteristics"
            tabPanel("Lake Ontario",
-                    h4(p("Coming Soon"))
+                    includeMarkdown("StaticPosts/LakeOntario-About.Rmd")
                     ),
            tabPanel("Oneida Lake",
-                    h4(p("Coming Soon"))
+                    includeMarkdown("StaticPosts/OneidaLake-About.Rmd")
                     ),
            tabPanel("Onondaga Lake",
                     h4(p("Coming Soon"))
