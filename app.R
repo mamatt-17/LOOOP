@@ -24,6 +24,7 @@ library(shiny)
 library(ggplot2)
 library(knitr)
 library(shinydashboardPlus)
+library(shiny)
 
 #source("LOOOP.Rproj")
 
@@ -169,6 +170,7 @@ server <- function(input, output, session){
 # Defining reactive objects
   
   reactive_objects = reactiveValues()
+  datadata <- b5
   
   
 # Map Set Up----
@@ -224,23 +226,45 @@ depth <- reactive({
   })
 
 # Create new data frame that reacts to user selections and will update the plot code----
-  observe({
-    selectedData <- reactive({
-    b5 %>% filter(Station == input$site_choices,params==input$param_choices,Depth == input$depth, Datetime >= input$date_slider[1], Datetime <= input$date_slider[2]) %>% 
-      complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
-      fill(c(Station, Depth, params,lat, long, U.Depths, U.Years, Ylabel))%>% 
-      mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
-             Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" )
-             )
-  })
-    cleanMem()
-  })
+ # observe({
+  #  selectedData <- reactive({
+   # b5 %>% filter(Station == input$site_choices,params==input$param_choices,Depth == input$depth, Datetime >= input$date_slider[1], Datetime <= input$date_slider[2]) %>% 
+    #  complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
+     # fill(c(Station, Depth, params,lat, long, U.Depths, U.Years, Ylabel))%>% 
+      #mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
+       #      Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" )
+        #     )
+#  })
+ #   cleanMem()
+  #})
   
+makeReactiveBinding(b5)
+
+newData <- reactive({
+  input$site_choices
+  isolate({
+    datadata <- b5
+    datadata <- subset(datadata, Station %in% input$site_choices)
+  })
+  input$param_choices
+  isolate({
+    datadata <- b5
+    datadata <- subset(datadata, params %in% input$param_choices)
+  })
+  input$depth
+  isolate({
+    datadata <- b5
+    datadata <- subset(datadata, Depth %in% input$depth)
+  })
+})
+
+
  # Create a timeseries plot based on the selected options----  
   output$plot = renderPlot(
     {req(input$date_slider)
+      datadata <- newData()
     # Plotting Information
-  ggplot(data = selectedData(), mapping = aes(x = Datetime, y = value))+
+  ggplot(data = datadata, mapping = aes(x = Datetime, y = value))+
           geom_point(size = 2)+
           geom_line()+
           theme_minimal()+
