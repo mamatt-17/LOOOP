@@ -3,7 +3,7 @@
 # Set working directory and load packages----
 my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "stringi")
 lapply(my_packages, require, character.only = TRUE)
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Read in csv files of each dataset (a. Onondaga Lake buoy, b. 3 Rivers buoy data, c. Lake Ontario buoys data, d. Oneida Lake)----
     # A. Onondaga Lake data----
@@ -127,12 +127,12 @@ b5$Depth <- as.factor(as.character(b5$Depth))
 b5$params <- as.factor(as.character(b5$params))
 
 b5 <- b5 %>% mutate(Ylabel = case_when(
-  stri_detect_regex(params, "Temp") ~ "Temperature (°C)",
-  stri_detect_regex(params, "SC") ~ "Specific Conductance (µS/cm)",
+  stri_detect_regex(params, "Temp") ~ "Temperature (?C)",
+  stri_detect_regex(params, "SC") ~ "Specific Conductance (?S/cm)",
   stri_detect_regex(params, "pH") ~ "pH (units)",
   stri_detect_regex(params, "DO") ~ "Dissolved Oxygen (mg/l)",
   stri_detect_regex(params, "Tn") ~ "Turbidity (NTU)",
-  stri_detect_regex(params, "Chl") ~ "Chlorophyll-a (µg/l)"
+  stri_detect_regex(params, "Chl") ~ "Chlorophyll-a (?g/l)"
 ))
 
 

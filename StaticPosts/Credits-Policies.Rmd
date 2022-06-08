@@ -20,8 +20,9 @@ Content was developed by UFI staff and volunteers and workstudy students from th
 Application was made using R, RStudio and the following packages:  
 shiny, lubridate, plyr, dplyr, tidyr, ggplot2, leaflet, scales, knitr, shinycssloaders, shinydashboardPlus, stringi
   
-## Privacy Policy  
-This site uses Google Analytics to understand and measure visitors' engagement with the application. Data collected includes: XYZ. Personal data are not collected nor used for tracking purposes. By using this application, the user is accepting these terms of data collection.  
+## Privacy and Cookie Policy  
+This site uses Google Analytics to allow tracking technologies and services on the LOOOP webpage/application through the use of first party cookies and third-party cookies, to understand and measure visitors' engagement with the LOOOP application/webpage. By accessing this site, you consent to the collection and use of your information by Google Analytics. You are encouraged to review their [privacy policy](https://policies.google.com/privacy?hl=en) and contact them directly if you have any questions. Examples of the data collected with cookies includes: type of device used to open the app, user's country, length of app usage, input choices and frequency and order of input changes. Data collected with cookies does not directly identify the user. We do not transfer personal information to Google Analytics.  
+If you would like to opt out of data collected on this site using Google Analytics, we encourage you to install this [add-on](https://tools.google.com/dlpage/gaoptout/?hl=en-GB) to your browser.
 
 ## Licenses  
 The purpose of this application is educational. Data and information displayed by this application is under the [Creative Commons Attribution 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/), allowing users to share and adapt the presented materials for non-commercial use. The underlying source code used to formal and display the content is licensed under the [MIT License](.

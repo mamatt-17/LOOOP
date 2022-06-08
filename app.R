@@ -10,11 +10,24 @@
 #devtools::install_github("utah-dwq/wqTools")
 my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "shiny","ggplot2","leaflet", "scales", "knitr","shinycssloaders","shinydashboardPlus")
 lapply(my_packages, require, character.only = TRUE)
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+library(rsconnect)
+library(leaflet)
+library(rstudioapi)
+library(shinycssloaders)
+library(rmarkdown)
+library(lubridate)
+library(plyr)
+library(dplyr)
+library(tidyr)
+library(shiny)
+library(ggplot2)
+library(knitr)
+library(shinydashboardPlus)
+
+#source("LOOOP.Rproj")
 
 # Initial Setup for Application----
-
-# Load data files from initial data workup file (looop_data)
 
 param_choices <- c("Temp", "SC", "pH", "DO", "Tn", "Chl")
 names(param_choices) <- c("Temperature", "Specific Conductance","pH","Dissolved Oxygen","Turbidity","Chlorophyll-a")
@@ -24,7 +37,7 @@ sites <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430"
 #depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
 # Create User Interface (UI)----
-ui <-fluidPage(
+ui <-fluidPage({
 # Title that will appear at top of page
   navbarPage(title = div(
     #style = "padding: 1px 0px; width: '100%'",
@@ -132,6 +145,7 @@ tabPanel("Credits and Privacy Policy", icon = icon("info-circle"),
          includeMarkdown("StaticPosts/Credits-Policies.Rmd")
 ) #End of Policy tab
 ) # End of NavBarpage
+}
 ) # End of Fluid Page
 
 # Create server function (response to UI)----
@@ -149,8 +163,9 @@ server <- function(input, output, session){
 
 # Set up app with data and defining objects----
   #load("~/GitHub/LOOOP/looop.rdata")
-  load("//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/looop.rdata")
-  
+  #load("//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/looop.rdata")
+  load("looop.rdata")
+  #source("~/LOOOP/looop.rdata")
 # Defining reactive objects
   
   reactive_objects = reactiveValues()
@@ -209,13 +224,16 @@ depth <- reactive({
   })
 
 # Create new data frame that reacts to user selections and will update the plot code----
-  selectedData <- reactive({
+  observe({
+    selectedData <- reactive({
     b5 %>% filter(Station == input$site_choices,params==input$param_choices,Depth == input$depth, Datetime >= input$date_slider[1], Datetime <= input$date_slider[2]) %>% 
       complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
       fill(c(Station, Depth, params,lat, long, U.Depths, U.Years, Ylabel))%>% 
       mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
              Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" )
              )
+  })
+    cleanMem()
   })
   
  # Create a timeseries plot based on the selected options----  
@@ -236,11 +254,21 @@ depth <- reactive({
             axis.text = element_text(size = 15)
           )
       })
+
 }
 
 
   
 
 ## Run app----
-shinyApp(ui = ui, server = server)
-#runApp()
+#shinyApp(ui = ui, server = server)
+options(encoding = "UTF-8")
+runApp()
+
+profvis({runApp()})
+
+##DEPLOY APP to shinyapps.io server----
+#library(rsconnect)
+#rsconnect::deployApp("\\\\aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP")
+
+

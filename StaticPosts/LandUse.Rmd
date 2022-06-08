@@ -22,7 +22,7 @@ The typical land usage people see everyday include residential, agricultural, fo
 
 Lake Ontario is a Great Lake and is the biggest out of the three lakes in the LOOOP. With a population of 2.8 million in the U.S. and 2.8 million in Canada in its watershed, the land has been greatly influenced by human activity. People are drawn to its shores and many vacation to lake houses along its shoreline, creating a strip of medium intensity residential area with the influx of population near its shoreline. Away from the shoreline and in the hills is where forage agriculture becomes more prominent, with products such as hay and grass silage being the top crop in the area (Our Great Lakes, NOAA).  
 <p align="center">
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/Toronto-Canada.png">  
+<img src="www/Toronto-Canada.png">  
  <br> 
   Photograph of Toronto, Canada ()  
 
@@ -32,7 +32,7 @@ Lake Ontario is a Great Lake and is the biggest out of the three lakes in the LO
 
 Oneida Lake is the second largest lake in the program. Much like Lake Ontario, Oneida has medium intensity developed area near its shoreline, with more cropland occuring in the watershed than next to the lake. The area to the north of Oneida Lake is heavily forested, while south of the lake is a combination of pasture/hay and crop land (WMS Map: Oneida Lake - Land Use).  
 <p align="center">
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/Oneida-LandUse.png">  
+<img src="www/Oneida-LandUse.png">  
 <br>
   Land cover map of area surrounding Oneida Lake from [AndyArthur.org](https://andyarthur.org/wms-map-oneida-lake-land-use.html)
 
@@ -41,8 +41,8 @@ Oneida Lake is the second largest lake in the program. Much like Lake Ontario, O
 
 The final lake is Onondaga Lake, the smallest of the three in the LOOOP, and closest to the City of Syracuse. Unlike the other two lakes, Onondaga Lake has high density residential areas directly adjacent to the lake and within its watershed. The watershed is also highly industrialized, with lots of transportation routes (roads).  A public park at the north end of the lake offers some greenery, but there is certainly less agriculture directly next to the lake when compared to the other two lakes.  
 <p align="center">
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/Onondaga-LandUse.png")>  
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/Buoy-Deployment.png">   
+<img src="www/Onondaga-LandUse.png")>  
+<img src="www/Buoy-Deployment.png">   
 <br>
   Land cover map of area surrounding Onondaga Lake from [AndyArthur.org](https://andyarthur.org/wms-map-oneida-lake-land-use.html) and Upstate Freshwater Institute deployment of autonomous buoy on Onondaga Lake, March 2021  
 </p>

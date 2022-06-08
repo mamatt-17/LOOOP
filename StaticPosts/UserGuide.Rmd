@@ -16,17 +16,17 @@ output:
 
 ## Map
  You can zoom in and out on the map by either selecting the plus(+)/minus(-) buttons in the top left-hand corner or scrolling with your mouse while the cursor is hovering over the map. You can move the map by clicking on the map and dragging the cursor.  
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/map-overview.png"/>  
+<img src="www/map-overview.png">  
 
 Circles on this map indicate sampling locations used during monitoring programs conducted by the Upstate Freshwater Institute (UFI). If you click on a circle, the site name, depth at which data were collected, and years data were collected will appear in a pop-up box. _Note_, monitoring at these sites was not year-round and not all depths were monitored at each site/during each year. To exit out of this window you can select the X in the top right-hand corner or click the map or another sampling site.  
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/map-site.png"/>  
+<img src="www/map-site.png">  
 
 ## Plot Data
 Using the "Plot Options" box, you can create graphs showing common measurements of water quality over time. Use the dropdown box to first select a **Parameter**, or water quality measurement. Then select a **Station**. These stations were named after the navigational buoys in the 3 Rivers system that marked monitoring locations. Once you select a station, the **Depth** dropdown box will update to list all depths at that station with available data. Also, the **Date Range** will appear in the Plot Options box with the earliest monitoring date listed on the left and the most recent monitoring date listed on the right. You can move both ends of this sliding scale to change the timeframe (x-axis) shown on the graph.  
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/plot-example.png"/>  
+<img src="www/plot-example.png">  
 
 If your selections cause an error message to appear, there is no data available for the criteria you have set. Make adjustments to the Date Range, Depth, or other input to reset the graph.
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/error-message.png"/>  
+<img src="www/error-message.png">  
 
 
 ## See the **_About the Data_** tab to read more about water quality measurements and the story behind this dataset.

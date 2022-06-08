@@ -16,7 +16,7 @@ output:
 </style>
 
 <p align="center">
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/GL-watershed_Borhorst_cropped.png">  
+<img src="www/GL-watershed_Borhorst_cropped.png">  
  <br>  
   Areal view of the Great Lakes watershed (Picture by Borhorst, 2016) 
 
@@ -25,7 +25,7 @@ output:
 To understand current natural systems, it is crucial to know the factors that contributed to the formation of geomorphological features that we witness today. Geomorphology is the study of landforms and their evolution through physical, chemical, and biological processes. Topographic features such as hills, lakes, mountains, lakes, and rivers are dynamically formed over time, leaving evidence of their formation and seemingly permanent presence in the current landscape. The Great Lakes are an exceptional hydrologic phenomenon that holds great importance -- not only for the region, but for the whole country. Holding 85% of North America's fresh surface water and 20% of the world’s, these lakes are integral in understanding how we manage fresh water which is an ever depleting natural resource (Allen, 1975). The five lakes including Lake Superior, Lake Michigan, Lake Huron, Lake Erie, and Lake Ontario are interconnected, creating unique regional hydrologic patterns, which are potential gateways for invasive species to spread and a shared interest in ensuring water quality among the entire Great Lakes watershed. Four of the five Great Lakes are located between the United States and Canada; because of this, not only do the lakes create natural boundaries, but also serve as a cultural center.  
   
 <p align="center">
-<img src="//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/www/geologic-timeline.png">  
+<img src="www/geologic-timeline.png">  
 <br>
   Earth's geologic timeline  
 </p>
