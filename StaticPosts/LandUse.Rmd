@@ -32,7 +32,7 @@ Lake Ontario is a Great Lake and is the biggest out of the three lakes in the LO
 
 Oneida Lake is the second largest lake in the program. Much like Lake Ontario, Oneida has medium intensity developed area near its shoreline, with more cropland occuring in the watershed than next to the lake. The area to the north of Oneida Lake is heavily forested, while south of the lake is a combination of pasture/hay and crop land (WMS Map: Oneida Lake - Land Use).  
 <p align="center">
-<img src="www/Oneida-LandUse.png">  
+<img src="https://github.com/mamatt-17/LOOOP/blob/ec447fd2ab180620e5e08f7f1d5c11624448e98d/www/Oneida-LandUse.png">  
 <br>
   Land cover map of area surrounding Oneida Lake from [AndyArthur.org](https://andyarthur.org/wms-map-oneida-lake-land-use.html)
 
@@ -41,8 +41,8 @@ Oneida Lake is the second largest lake in the program. Much like Lake Ontario, O
 
 The final lake is Onondaga Lake, the smallest of the three in the LOOOP, and closest to the City of Syracuse. Unlike the other two lakes, Onondaga Lake has high density residential areas directly adjacent to the lake and within its watershed. The watershed is also highly industrialized, with lots of transportation routes (roads).  A public park at the north end of the lake offers some greenery, but there is certainly less agriculture directly next to the lake when compared to the other two lakes.  
 <p align="center">
-<img src="www/Onondaga-LandUse.png")>  
-<img src="www/Buoy-Deployment.png">   
+<img src="https://github.com/mamatt-17/LOOOP/blob/ec447fd2ab180620e5e08f7f1d5c11624448e98d/www/Onondaga-LandUse.png")>  
+<img src="https://github.com/mamatt-17/LOOOP/blob/ec447fd2ab180620e5e08f7f1d5c11624448e98d/www/Buoy-Deployment.png">   
 <br>
   Land cover map of area surrounding Onondaga Lake from [AndyArthur.org](https://andyarthur.org/wms-map-oneida-lake-land-use.html) and Upstate Freshwater Institute deployment of autonomous buoy on Onondaga Lake, March 2021  
 </p>

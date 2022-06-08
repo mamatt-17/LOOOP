@@ -21,7 +21,7 @@ output:
 Oneida Lake is the largest lake entirely within New York with a surface area of 207 square km (80 square miles) and is 33 km (20.5 miles) long and 8.7 km (5.4 miles) wide.  The lake has an average depth of 6.7 m (22 ft) and a maximum depth of 16.7 m (54.8 ft).  The lake has numerous shoals with the largest near the center of the lake where it is quite shallow.  The lake’s watershed is almost 3,532 square kilometers (1,364 square miles) and has portions of 6 counties and 69 municipalities within it.  Oneida Lake and its watershed make up almost 6% of the Lake Ontario watershed!  
 
 <p align="center">
-<img src="www/Oneida_watershed.jpeg">  
+<img src="https://github.com/mamatt-17/LOOOP/blob/ec447fd2ab180620e5e08f7f1d5c11624448e98d/www/Oneida_watershed.jpeg">  
  <br>  
   Location of Oneida Lake and its watershed in central NY. Water from Oneida Lake flows downstream to Lake Ontario through the Oneida and Oswego Rivers.
 

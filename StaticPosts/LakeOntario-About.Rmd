@@ -22,7 +22,7 @@ Lake Ontario receives most of its inflow from the other Great Lakes (Superior, M
   
 The Lake Ontario watershed covers about 24,720 square miles (about the size of the state of West Virginia). Within the state of New York, the watershed makes up nearly 20% of the entire state! Some major river watersheds that feed into the lake include the Genesee River, Oswego River (which receives water from the Finger Lakes) and the Black River. There are also many smaller tributaries along the Lake Ontario shoreline that are a part of its watershed.  
 <p align="center">
-<img src="www/GreatLakes_watershed_cropped2.jpeg">  
+<img src="https://github.com/mamatt-17/LOOOP/blob/ec447fd2ab180620e5e08f7f1d5c11624448e98d/www/GreatLakes_watershed_cropped2.jpeg">  
  <br>  
   The Great Lakes and watersheds. Lake Ontario is the easternmost of the five lakes and has a watershed that lies within NY state and Canada.  
 ## History and Future  
