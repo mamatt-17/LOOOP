@@ -5,9 +5,9 @@ account: looop
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6336051
-bundleId: 5990043
+bundleId: 5990140
 url: https://looop.shinyapps.io/LOOOP/
-when: 1654710524.78997
-lastSyncTime: 1654710524.78997
+when: 1654712270.28757
+lastSyncTime: 1654712270.28757
 asMultiple: FALSE
 asStatic: FALSE

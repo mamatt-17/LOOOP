@@ -83,9 +83,9 @@ uiOutput("date_slider"),
 uiOutput("unique_dates")
 ),
 # Output from selections, in columns 8-12
-column(5,
+#column(5,
 # Plot graph
-       shinycssloaders::withSpinner(plotOutput("plot")))
+   #    shinycssloaders::withSpinner(plotOutput("plot")))
 )
 ), # End of Application Sub-tab
 
@@ -238,46 +238,47 @@ depth <- reactive({
  #   cleanMem()
   #})
   
-makeReactiveBinding(b5)
+#makeReactiveBinding(b5)
 
-newData <- reactive({
-  input$site_choices
-  isolate({
-    datadata <- b5
-    datadata <- subset(datadata, Station %in% input$site_choices)
-  })
-  input$param_choices
-  isolate({
-    datadata <- b5
-    datadata <- subset(datadata, params %in% input$param_choices)
-  })
-  input$depth
-  isolate({
-    datadata <- b5
-    datadata <- subset(datadata, Depth %in% input$depth)
-  })
-})
+#newData <- reactive({
+ # input$site_choices
+  #isolate({
+   # datadata <- b5
+    #datadata <- subset(datadata, Station %in% input$site_choices)
+  #})
+  #input$param_choices
+  #isolate({
+    
+   # datadata <- subset(datadata, params %in% input$param_choices)
+  #})
+  #input$depth
+  #isolate({
+   # 
+  #  datadata <- subset(datadata, Depth %in% input$depth)
+  #})
+#})
 
 
  # Create a timeseries plot based on the selected options----  
-  output$plot = renderPlot(
-    {req(input$date_slider)
-      datadata <- newData()
+ # output$plot = renderPlot(
+  #  {req(input$date_slider)
+   #   datadata <- newData()
     # Plotting Information
-  ggplot(data = datadata, mapping = aes(x = Datetime, y = value))+
-          geom_point(size = 2)+
-          geom_line()+
-          theme_minimal()+
-          scale_y_continuous(name =  selectedData()$Ylabel,
-                             limits = c(floor(min(selectedData()$value, na.rm = T)),ceiling(max(selectedData()$value,na.rm = T))),
-                             breaks = pretty_breaks())+
-          scale_x_datetime(name = "Date")+
-          theme(
-            panel.border = element_rect(color = "black", fill = NA, size = 1),
-            axis.ticks = element_line(color = "black", size = 1),
-            axis.text = element_text(size = 15)
-          )
-      })
+  #intplot <- ggplot(data = datadata, mapping = aes(x = Datetime, y = value))+
+  #        geom_point(size = 2)+
+   #       geom_line()+
+    #      theme_minimal()+
+     #     scale_y_continuous(name =  newData()$Ylabel,
+      #                       limits = c(floor(min(newData()$value, na.rm = T)),ceiling(max(newData()$value,na.rm = T))),
+       #                      breaks = pretty_breaks())+
+        #  scale_x_datetime(name = "Date")+
+         # theme(
+          #  panel.border = element_rect(color = "black", fill = NA, size = 1),
+           # axis.ticks = element_line(color = "black", size = 1),
+            #axis.text = element_text(size = 15)
+          #)
+  #return(intplot)
+   #   })
 
 }
 
