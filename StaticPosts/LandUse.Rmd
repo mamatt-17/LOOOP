@@ -22,9 +22,9 @@ The typical land usage people see everyday include residential, agricultural, fo
 
 Lake Ontario is a Great Lake and is the biggest out of the three lakes in the LOOOP. With a population of 2.8 million in the U.S. and 2.8 million in Canada in its watershed, the land has been greatly influenced by human activity. People are drawn to its shores and many vacation to lake houses along its shoreline, creating a strip of medium intensity residential area with the influx of population near its shoreline. Away from the shoreline and in the hills is where forage agriculture becomes more prominent, with products such as hay and grass silage being the top crop in the area (Our Great Lakes, NOAA).  
 <p align="center">
-<img src="www/Toronto-Canada.png">  
+<img src="https://github.com/mamatt-17/LOOOP/blob/064cba4f51455b10c0d69d8d1a858c62b1a41091/www/Toronto-Canada.png">  
  <br> 
-  Photograph of Toronto, Canada ()  
+  Photograph of Toronto, Canada (DO, UFI)  
 
 </p>  
  

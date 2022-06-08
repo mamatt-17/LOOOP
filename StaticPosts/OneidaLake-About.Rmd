@@ -13,7 +13,7 @@ output:
   }
 </style>
   <p align="center">
-<img src="www/Oneida-Characteristics.png">  
+<img src="https://github.com/mamatt-17/LOOOP/blob/064cba4f51455b10c0d69d8d1a858c62b1a41091/www/Oneida-Characteristics.png">  
  <br>  
   Lake and watershed characteristics of Oneida Lake.  
   

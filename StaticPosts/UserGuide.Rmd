@@ -16,7 +16,7 @@ output:
 
 ## Map
  You can zoom in and out on the map by either selecting the plus(+)/minus(-) buttons in the top left-hand corner or scrolling with your mouse while the cursor is hovering over the map. You can move the map by clicking on the map and dragging the cursor.  
-<img src="www/map-overview.PNG">  
+<img src="https://github.com/mamatt-17/LOOOP/blob/064cba4f51455b10c0d69d8d1a858c62b1a41091/www/map-overview.PNG">  
 
 Circles on this map indicate sampling locations used during monitoring programs conducted by the Upstate Freshwater Institute (UFI). If you click on a circle, the site name, depth at which data were collected, and years data were collected will appear in a pop-up box. _Note_, monitoring at these sites was not year-round and not all depths were monitored at each site/during each year. To exit out of this window you can select the X in the top right-hand corner or click the map or another sampling site.  
 <img src="www/map-site.PNG">  
