@@ -7,10 +7,9 @@
 
 
 # Load packages and Set Working Directory----
-#devtools::install_github("utah-dwq/wqTools")
-my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "shiny","ggplot2","leaflet", "scales", "knitr","shinycssloaders","shinydashboardPlus")
-lapply(my_packages, require, character.only = TRUE)
-#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "shiny","ggplot2","leaflet", "scales", "knitr","shinycssloaders","shinydashboardPlus")
+#lapply(my_packages, require, character.only = TRUE)
+#setwd("LOOOP")
 library(rsconnect)
 library(leaflet)
 library(rstudioapi)
@@ -96,7 +95,7 @@ tabPanel("User's Guide",
 
 # Third side-panel navigational tab (Meta Data)
 tabPanel("About the Data",
-         h4(p("Coming Soon"))
+         includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")
          ), # End of Meta sub-tab
 # Set side-panel width (2) and Nav list panel (10) widths using fluid grid system
 fluid = TRUE, widths = c(2,10))), # End of Data Explorer tab
