@@ -1,16 +1,8 @@
-# Shiny File for running LOOOP page
-# You can run the application by clicking the 'Run App' button above; large application so it may not load
-# Note, when the application is running you have to press the Stop button in order to run additional code.
-
-# Use shinyApp() to print application; images may not load using this function
-
-
-
-# Load packages and Set Working Directory----
-#my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "shiny","ggplot2","leaflet", "scales", "knitr","shinycssloaders","shinydashboardPlus")
-#lapply(my_packages, require, character.only = TRUE)
-#setwd("LOOOP")
-library(rsconnect)
+# Load packages----
+library(shiny)
+library(shinydashboard)
+library(shinydashboardPlus)
+#library(rsconnect)
 library(leaflet)
 library(rstudioapi)
 library(shinycssloaders)
@@ -19,277 +11,89 @@ library(lubridate)
 library(plyr)
 library(dplyr)
 library(tidyr)
-library(shiny)
 library(ggplot2)
 library(knitr)
-library(shinydashboardPlus)
-library(shiny)
+library(scales)
 
-#source("LOOOP.Rproj")
-
-# Initial Setup for Application----
-
-param_choices <- c("Temp", "SC", "pH", "DO", "Tn", "Chl")
-names(param_choices) <- c("Temperature", "Specific Conductance","pH","Dissolved Oxygen","Turbidity","Chlorophyll-a")
+# Choices for drop downs----
+param_choices <- c("Temperature (deg. C)"="Temp", "Specific Conductance (uS/cm)"="SC", "pH (units)"="pH", "Dissolved Oxygen (mg/L)"="DO", "Turbidity (NTU)"="Tn", "Chlorophyll-a (ug/L)"="Chl")
 
 sites <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430", "CROSS")
 
-#depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
+depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
 # Create User Interface (UI)----
-ui <-fluidPage({
-# Title that will appear at top of page
-  navbarPage(title = div(
-    #style = "padding: 1px 0px; width: '100%'",
-    img(src = "logo_looop.png", width = "20px",height = "20px"),
-    "LOOOP-Lake Ontario, Oneida, Onondaga Program"
-    ), 
-
-  # Data Explorer Interactive Application tab (sub-tabs on side panel)----
-  tabPanel("Data Explorer", icon = icon("chart-bar"), 
-
-# Adding in side-panel navigational sub-tabs
-navlistPanel("Data Explorer",
-# First side-panel navigational tab (Application)
-             tabPanel("Application",
-# Setting up interface using fluid grid system (12 columns across)
-                      fluidRow(
-# In columns 1-3, map of area with clickable data points will appear
-  column(3, h4("Click a site for more information"),
-         shinycssloaders::withSpinner(leaflet::leafletOutput("mymap"))
-         ),
-
-# In columns 4-7, data filter/inputs for graphing will appear
-  column(3,
-         wellPanel(
-# Overall Title
-           h4("Plot options"),
-           # Selection for Parameter
-           selectInput("param_choices", label = "Parameter:",
-                       choices = param_choices
-           ),
-           # Selection for Station
-selectInput("site_choices", label = "Station:",
-            choices = sites
-),
-# Selection for Depths
-selectInput("depth", label = "Depth(s):",
-                   choices = NULL),
-# Time Range Slider
-uiOutput("date_slider"),
-#checkboxInput("show_dates", label = "Show all profile dates", value = TRUE)
-),
-uiOutput("unique_dates")
-),
-# Output from selections, in columns 8-12
-#column(5,
-# Plot graph
-   #    shinycssloaders::withSpinner(plotOutput("plot")))
-)
-), # End of Application Sub-tab
-
-# Second side-panel navigational tab (User's Guide)
-tabPanel("User's Guide",
-         includeMarkdown("StaticPosts/UserGuide.Rmd")
-         ), # End of How-To Sub-tab
-
-# Third side-panel navigational tab (Meta Data)
-tabPanel("About the Data",
-         includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")
-         ), # End of Meta sub-tab
-# Set side-panel width (2) and Nav list panel (10) widths using fluid grid system
-fluid = TRUE, widths = c(2,10))), # End of Data Explorer tab
-
-  # Lake Characteristics navigational (expandable) tab----
-navbarMenu("Lake Characteristics", icon = icon("water"),
-# Options beneath "Lake Characteristics"
-           tabPanel("Lake Ontario",
-                    includeMarkdown("StaticPosts/LakeOntario-About.Rmd")
-                    ),
-           tabPanel("Oneida Lake",
-                    includeMarkdown("StaticPosts/OneidaLake-About.Rmd")
-                    ),
-           tabPanel("Onondaga Lake",
-                    h4(p("Coming Soon"))
-                    )
-           ), # End of Lake Characteristics tab
-
-  # Topics navigational (expandable) tab----
-navbarMenu("Topics", icon = icon("lightbulb"),
-# Options beneath "Topics"
-           tabPanel("Great Lakes Geomorphology",
-# Read R markdown file that contains text and images
-                    includeMarkdown("StaticPosts/Geomorph.Rmd")),
-           tabPanel("Lake Levels",
-                    includeMarkdown("StaticPosts/LakeLevels.Rmd")),
-           tabPanel("Land Use",
-                    includeMarkdown("StaticPosts/LandUse.Rmd")),
-           tabPanel("Fisheries",
-                    h5(p("Coming Soon"))),
-           tabPanel("Effects of Pollution",
-                    includeMarkdown("StaticPosts/Pollution.Rmd"))
-           ), # End of Topics tab
-
-  # About LOOOP tab----
-tabPanel("About LOOOP", icon = icon("question-circle"), 
-fluidRow(column(6,
-                includeMarkdown("StaticPosts/About.Rmd"),
-                socialButton(href = "https://www.instagram.com/lake_looop/", icon = icon("instagram", "fa-5x"))),
-         column(6,align = "center",
-                img(src = "logo_looop.png", width = "400px",height = "400px"))
-         )
-), # End of About tab
-
-  # Credits and Privacy Policy tab----
-tabPanel("Credits and Privacy Policy", icon = icon("info-circle"),
-         includeMarkdown("StaticPosts/Credits-Policies.Rmd")
-) #End of Policy tab
-) # End of NavBarpage
-}
-) # End of Fluid Page
+ui <- dashboardPage(
+    dashboardHeader(title = "LOOOP"),
+    dashboardSidebar(),
+    dashboardBody(
+      fluidRow(
+        box(plotOutput("plot1", height = 250)),
+        box(title = "Controls",
+            selectInput("param_choices","Parameter:", param_choices),
+            selectInput("site_choices", "Station:", sites),
+            selectInput("depth","Depth:", NULL)
+            ,
+            uiOutput("date_slider")
+            )
+      ) # Row
+    ) # Dash Body
+  )# Dash Page
 
 # Create server function (response to UI)----
 server <- function(input, output, session){
-  
-# Create Dialog Box to keep user from reloading page
-  showModal(modalDialog(title= "Welcome to the LOOOP!", 
-                        "Use the Plot Options to begin exploring the data collected by the Upstate Freshwater Institute and use the tabs on the Navigation Bar to learn more about the Lake Ontario Watershed.
-                        Click outside of this box to get started!",
-                        size = "l",
-                        easyClose = TRUE,
-                        footer = NULL))
 
- 
-
-# Set up app with data and defining objects----
-  #load("~/GitHub/LOOOP/looop.rdata")
-  #load("//aquadog/analysis/2021_LOOOP_NYSG_Small_Grant/06_Webpage-Shiny App/LOOOP/looop.rdata")
-  load("looop.rdata")
-  #source("~/LOOOP/looop.rdata")
-# Defining reactive objects
+load("riverdata.rdata")
   
-  reactive_objects = reactiveValues()
-  datadata <- b5
-  
-  
-# Map Set Up----
-  mymap <- createLeafletMap(session, "mymap")
-
-# Draw Map with markers at data sites, set View of map to area of interest upon loading
-session$onFlushed(once= T, function(){
-  output$mymap <- renderLeaflet({
-  leaflet() %>%
-    addProviderTiles(providers$Stamen.Terrain,
-                     options = providerTileOptions(noWrap = TRUE)
-    ) %>% setView(
-      lng = -76.354,
-      lat= 43.248,
-      zoom = 9
-    ) %>% addCircleMarkers(
-      lng = mapframe$long,
-      lat = mapframe$lat,
-      popup = paste0(
-                    "Station: ",mapframe$Station, "<br>",
-                    "Depth(s): ",mapframe$U.Depths, "<br>",
-                    "Year(s): ",mapframe$U.Years),
-      labelOptions = labelOptions(textsize = "15px")
-    )
-})
-
+  site_choices <-reactive({
+    return(subset(river.data, Station == input$site_choices))
   })
-
-
-
-# REACTIVITY----
-# Filtering depth choices based on selected site----
-site_choices <- reactive({
-  filter(b5, Station == input$site_choices)
-})
-observeEvent(site_choices(),{
-  choices <- unique(na.omit(site_choices()$Depth))
-  updateSelectInput(inputId = "depth", choices = choices)
-})
-
-depth <- reactive({
-  req(input$depth)
-  filter(site_choices(), Depth == input$depth)
-})
-
-
-# When station is selected, date slider that controls the X axis appears----
+  
+  observeEvent(site_choices(),{
+    d.choices <- unique(na.omit(site_choices()$Depth))
+    updateSelectInput(inputId = "depth", choices = d.choices)
+  })
+  
+  depth <- reactive({
+    req(input$depth)
+    filter(site_choices(), Depth == input$depth)
+  })
+  
   output$date_slider <- renderUI({
     req(input$site_choices)
-    date_min = min(site_choices()$Date)
-    date_max = max(site_choices()$Date)
-    sliderInput("date_slider","Date range:", min = date_min, max = date_max, value = c(date_min,date_max),timeFormat = "%m-%d-%Y")
+    date_min= min(site_choices()$Datetime)
+    date_max = max(site_choices()$Datetime)
+    sliderInput("date_slider","Date Range:", min = date_min, max = date_max, value = c(date_min,date_max),timezone = "EST")
   })
-
-# Create new data frame that reacts to user selections and will update the plot code----
- # observe({
-  #  selectedData <- reactive({
-   # b5 %>% filter(Station == input$site_choices,params==input$param_choices,Depth == input$depth, Datetime >= input$date_slider[1], Datetime <= input$date_slider[2]) %>% 
-    #  complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
-     # fill(c(Station, Depth, params,lat, long, U.Depths, U.Years, Ylabel))%>% 
-      #mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
-       #      Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" )
-        #     )
-#  })
- #   cleanMem()
-  #})
   
-#makeReactiveBinding(b5)
-
-#newData <- reactive({
- # input$site_choices
-  #isolate({
-   # datadata <- b5
-    #datadata <- subset(datadata, Station %in% input$site_choices)
-  #})
-  #input$param_choices
-  #isolate({
-    
-   # datadata <- subset(datadata, params %in% input$param_choices)
-  #})
-  #input$depth
-  #isolate({
-   # 
-  #  datadata <- subset(datadata, Depth %in% input$depth)
-  #})
-#})
-
-
- # Create a timeseries plot based on the selected options----  
- # output$plot = renderPlot(
-  #  {req(input$date_slider)
-   #   datadata <- newData()
-    # Plotting Information
-  #intplot <- ggplot(data = datadata, mapping = aes(x = Datetime, y = value))+
-  #        geom_point(size = 2)+
-   #       geom_line()+
-    #      theme_minimal()+
-     #     scale_y_continuous(name =  newData()$Ylabel,
-      #                       limits = c(floor(min(newData()$value, na.rm = T)),ceiling(max(newData()$value,na.rm = T))),
-       #                      breaks = pretty_breaks())+
-        #  scale_x_datetime(name = "Date")+
-         # theme(
-          #  panel.border = element_rect(color = "black", fill = NA, size = 1),
-           # axis.ticks = element_line(color = "black", size = 1),
-            #axis.text = element_text(size = 15)
-          #)
-  #return(intplot)
-   #   })
-
-}
-
-
   
+  our.data <- reactive({
+    return(subset(river.data, (params %in% input$param_choices & Station %in% input$site_choices & Depth %in% input$depth | is.na(Abs.Depth))))
+   return(subset(river.data, (Datetime >= input$date_slider[1] & Datetime <= input$date_slider[2])))
+  })
+  
+
+  output$plot1 <- renderPlot({
+    ggplot(data = our.data(), mapping = aes(x = Datetime, y = value))+
+      geom_point(size = 2)+
+      geom_line()+
+      theme_minimal()+
+      labs(x = "Date", y = names(param_choices[which(param_choices == input$param_choices)]))+
+      scale_x_datetime(limits = c(input$date_slider[1],input$date_slider[2]),
+                       breaks = breaks_pretty(),
+                       labels = label_date_short(format = c("%Y", "%b", "%d", "%H:%M"), sep = "\n"))+
+      theme(
+      panel.border = element_rect(color = "black", fill = NA, size = 1),
+      axis.ticks = element_line(color = "black", size = 1),
+      axis.text = element_text(size = 15)
+      )
+  })
+  }
+
 
 ## Run app----
-#shinyApp(ui = ui, server = server)
-options(encoding = "UTF-8")
-runApp()
+shinyApp(ui = ui, server = server)
 
-profvis({runApp()})
 
 ##DEPLOY APP to shinyapps.io server----
 #library(rsconnect)

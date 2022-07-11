@@ -3,23 +3,16 @@
 # Set working directory and load packages----
 my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "stringi")
 lapply(my_packages, require, character.only = TRUE)
-#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-# Read in csv files of each dataset (a. Onondaga Lake buoy, b. 3 Rivers buoy data, c. Lake Ontario buoys data, d. Oneida Lake)----
-    # A. Onondaga Lake data----
-
-    # B. 3 Rivers data, read all files into 1 dataset----
+# Read in csv files of each dataset----
+    # 3 Rivers data, read all files into 1 dataset----
 filenames <- list.files(path = './CSV_files/3Rivers', pattern = '*', full.names = TRUE)
 b <- ldply(filenames, read.csv)
 
-    # C. Lake Ontario data----
-
-    # D. Oneida Lake data----
-
+    
 # Manipulated data so that it meets requirements for visualizations----
-    # A. Onondaga Lake----
-
-    # B. 3 Rivers----
+    # 3 Rivers----
 b$system.code <- as.character(b$system.code)
 b$date <- as.Date(b$date,format = "%m/%d/%Y")
 b$datetime <- as.POSIXct(paste(b$date, b$time), format = "%Y-%m-%d %H:%M") # Time cannot exist without date
@@ -104,16 +97,16 @@ for(i in 1:length(station_split)){
   assign(station_names[i],station_split[[i]])
 }
 
-B143 <- B143 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B148 <- B148 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B211 <- B211 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B22 <- B22 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B224 <- B224 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B266 <- B266 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B317 <- B317 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B409 <- B409 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-B430 <- B430 %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
-CROSS <- CROSS %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B143 <- B143 %>% arrange(Date) %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B148 <- B148 %>% arrange(Date) %>% complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B211 <- B211 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B22 <- B22 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B224 <- B224 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B266 <- B266 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B317 <- B317 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B409 <- B409 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+B430 <- B430 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
+CROSS <- CROSS %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
 
 
 # Recombine Station dataframes for complete dataframe that can be used to show holes in plots
@@ -127,49 +120,50 @@ b5$Depth <- as.factor(as.character(b5$Depth))
 b5$params <- as.factor(as.character(b5$params))
 
 b5 <- b5 %>% mutate(Ylabel = case_when(
-  stri_detect_regex(params, "Temp") ~ "Temperature (?C)",
-  stri_detect_regex(params, "SC") ~ "Specific Conductance (?S/cm)",
+  stri_detect_regex(params, "Temp") ~ "Temperature (deg.C)",
+  stri_detect_regex(params, "SC") ~ "Specific Conductance (uS/cm)",
   stri_detect_regex(params, "pH") ~ "pH (units)",
   stri_detect_regex(params, "DO") ~ "Dissolved Oxygen (mg/l)",
   stri_detect_regex(params, "Tn") ~ "Turbidity (NTU)",
-  stri_detect_regex(params, "Chl") ~ "Chlorophyll-a (?g/l)"
+  stri_detect_regex(params, "Chl") ~ "Chlorophyll-a (ug/l)"
 ))
 
 
-b5 <- b5 %>% group_by(Station)%>% arrange(Depth, .by_group = TRUE)
+#b5 <- b5 %>% group_by(Station)%>% arrange(Depth, .by_group = TRUE)
 
+#list.dataframe <- list(B143,B148,B211,B22,B224,B266,B317,B409,B430,CROSS)
 
+river.data <- b5 %>% arrange(Date)
 
 # Saving a smaller dataframe for the map----
 mapframe <- as.data.frame(unique(b5[c("Station","U.Depths","lat","long","U.Years")]))
-# C. Lake Ontario----
 
-    # D. Oneida Lake----   
-    
-# Save final file as .rdata for easier read into app----
-
-save(b5, mapframe, file = "looop.rdata")
 
 # TESTING PLOT CODE FOR APP----
 b6 <- b5 %>% filter(Station == "B211",params=="Temp",Depth == "2") %>% 
   complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
-  fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>% 
+fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>% 
   mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
          Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" ))
 
-ggplot(data = b6, mapping = aes(x = Datetime, y = value))+
-  geom_point(size = 2)+
-  geom_line()+
-  theme_minimal()+
-  scale_y_continuous(name =  "Temperature (deg. C)",
-                     limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
-                     breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
-  scale_x_datetime(name = "Date",
-                   date_breaks = "1 month",
-                   date_labels = "%b %y",
-                   date_minor_breaks = "1 day")+
-  theme(
-    panel.border = element_rect(color = "black", fill = NA, size = 1),
-    axis.ticks = element_line(color = "black", size = 1),
-    axis.text = element_text(size = 12)
-  )
+#ggplot(data = b6, mapping = aes(x = Datetime, y = value))+
+ # geom_point(size = 2)+
+#  geom_line()+
+ # theme_minimal()+
+  #scale_y_continuous(name =  "Temperature (deg. C)",
+   #                  limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
+    #                 breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
+  #scale_x_datetime(name = "Date",
+  #                 date_breaks = "1 month",
+   #                date_labels = "%b %y",
+    #               date_minor_breaks = "1 day")+
+  #theme(
+  #  panel.border = element_rect(color = "black", fill = NA, size = 1),
+  #  axis.ticks = element_line(color = "black", size = 1),
+  #  axis.text = element_text(size = 12)
+  #)
+# Save final file as .rdata for easier read into app----
+
+#save(b5, mapframe, file = "looop.rdata")
+write.csv(river.data, file = "river_data.csv")
+save(river.data, file = "riverdata.rdata")
