@@ -5,10 +5,10 @@ account: looop
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6336051
-bundleId: 6088968
+bundleId: 6089010
 url: https://looop.shinyapps.io/LOOOP/
-when: 1657566683.48958
-lastSyncTime: 1657566683.48958
+when: 1657567842.13969
+lastSyncTime: 1657567842.13969
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: looop.rdata|looop_data.R|river_data.csv|CSV_files
+ignoredFiles: looop.rdata|river_data.csv|StaticPosts|www

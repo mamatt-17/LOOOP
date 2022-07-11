@@ -25,11 +25,13 @@ depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" =
 # Create User Interface (UI)----
 ui <- dashboardPage(
     dashboardHeader(title = "LOOOP"),
-    dashboardSidebar(menuItem("Data Explorer",tabName = "Data", icon = icon("chart-bar")),
-                     menuItem("About the Data", tabName = "Meta"),
+    dashboardSidebar(menuItem("Data",tabName = "Data", icon = icon("chart-bar")),
+                     menuItem("Guide", tabName = "Meta", icon = icon("water")),
                      menuItem("Topics", tabName = "Topics", icon = icon("lightbulb")),
-                     menuItem("About LOOOP", tabName = "About", icon = icon("question-circle"))),
-    dashboardBody(tabItems(
+                     menuItem("About", tabName = "About", icon = icon("question-circle"))),
+    dashboardBody(
+      "Welcome to the LOOOP! Use the 'Data' Tab to begin exploring water quality data collected in the 3 Rivers System by the Upstate Freshwater Institute. Select the other tabs to learn more about the Lake Ontario Watershed and waterways!",
+      tabItems(
       tabItem(tabName = "Data",
       fluidRow(
         box(plotOutput("plot1", height = 250)),
@@ -42,9 +44,9 @@ ui <- dashboardPage(
             ) #box
       )), # Row/data tab
       tabItem(tabName = "Meta",
-      h2("coming soon")),
+      includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")),
       tabItem(tabName = "Topics",
-      h2("coming soon")),
+      href = "https://upstatefreshwater.org"),
       tabItem(tabName = "About",
       h2("coming soon"))
     ) # tab Items
@@ -96,7 +98,7 @@ load("riverdata.rdata")
       theme(
       panel.border = element_rect(color = "black", fill = NA, size = 1),
       axis.ticks = element_line(color = "black", size = 1),
-      axis.text = element_text(size = 20)
+      axis.text = element_text(size = 15)
       )
   })
   }
