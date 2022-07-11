@@ -6,18 +6,16 @@ lapply(my_packages, require, character.only = TRUE)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Read in csv files of each dataset----
-    # 3 Rivers data, read all files into 1 dataset----
+# 3 Rivers data, read all files into 1 dataset----
 filenames <- list.files(path = './CSV_files/3Rivers', pattern = '*', full.names = TRUE)
 b <- ldply(filenames, read.csv)
 
-    
-# Manipulated data so that it meets requirements for visualizations----
-    # 3 Rivers----
+# Manipulated 3 Rivers data so that it meets requirements for visualizations----
 b$system.code <- as.character(b$system.code)
 b$date <- as.Date(b$date,format = "%m/%d/%Y")
 b$datetime <- as.POSIXct(paste(b$date, b$time), format = "%Y-%m-%d %H:%M") # Time cannot exist without date
 
-    # Adding time period factor based on collection time (1. 21:00-3:00, 2.  3:01-9:00, 3. 9:01-15:00, 4. 15:01-21:00)
+# Adding time period factor based on collection time (1. 21:00-3:00, 2.  3:01-9:00, 3. 9:01-15:00, 4. 15:01-21:00)----
 b$timeperiod <- cut(hour(b$datetime), breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24), include.lowest = TRUE) 
 b <- b %>% 
 mutate(tp = lapply(timeperiod, 
@@ -32,8 +30,8 @@ mutate(tp = lapply(timeperiod,
                                    3 
                                else 4))
 b$tp <- as.factor(as.character(b$tp))
-    
-    # Factor stations and add coordinates
+
+# Factor stations and add coordinates----
 b$station.code <- as.factor(as.character(b$station.code))
 buoy.coord <-as.data.frame(unique(b$station.code))
 names(buoy.coord) <-c("Station")
@@ -41,7 +39,7 @@ buoy.coord$lat <-c(43.240093,43.44995,43.205123,43.231178,43.193388,43.139376,43
 buoy.coord$long <- c(-76.147568,-76.50349,-76.269799,-76.309791,-76.279911,-76.238025,-76.314771,-76.445725,-76.499537,-76.475456)
 #unique(b[c("system.code","station.code")],) # Check that the buoys are in the right river
 
-    # Round depth to nearest meter (determine if there's profiles, discrete depths, or typos)
+# Round depth to nearest meter (determine if there's profiles, discrete depths, or typos)----
 b <- b %>%
     mutate(r.depth = lapply(depth..m.,
                             function(x)
@@ -67,6 +65,7 @@ b2 <- b1 %>% mutate(
 
 b3 <- b2 %>% right_join(buoy.coord)
 
+# Unique dataframes----
 u.b <- data.frame(unique(b3[c("Station","Depth","year")]))
 
 u.b <- u.b[order(u.b$Depth),]
@@ -89,7 +88,7 @@ u.b2$U.Years <- c("2008, 2009",
 names(u.b2) <- c("Station","U.Depths","U.Years")
 b3 <- b3 %>% right_join(u.b2) %>% select(!c(System))
 
-# Separate dataframe by Station and fill in time gaps with NAs
+# Separate dataframe by Station and fill in time gaps with NAs----
 station_split <- split(b3,b3$Station)
 station_names <- as.character(unique(b3$Station))
 
@@ -109,7 +108,7 @@ B430 <- B430 %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T),
 CROSS <- CROSS %>% arrange(Date) %>%complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day'))%>% fill(c(Station, lat, long, U.Depths, U.Years)) %>% mutate(year = year(Date))
 
 
-# Recombine Station dataframes for complete dataframe that can be used to show holes in plots
+# Recombine Station dataframes for complete dataframe that can be used to show holes in plots----
 b4 <- rbind(B143,B148,B211,B22,B224,B266,B317,B409,B430,CROSS)
 
 b4 <- b4 %>% mutate(Abs.Time = replace_na(Abs.Time, "00:00:00")) %>% mutate(Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M"))
@@ -140,11 +139,11 @@ mapframe <- as.data.frame(unique(b5[c("Station","U.Depths","lat","long","U.Years
 
 
 # TESTING PLOT CODE FOR APP----
-b6 <- b5 %>% filter(Station == "B211",params=="Temp",Depth == "2") %>% 
-  complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
-fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>% 
-  mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
-         Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" ))
+#b6 <- b5 %>% filter(Station == "B211",params=="Temp",Depth == "2") %>% 
+ # complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
+#fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>% 
+ # mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
+  #       Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" ))
 
 #ggplot(data = b6, mapping = aes(x = Datetime, y = value))+
  # geom_point(size = 2)+
@@ -165,5 +164,6 @@ fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>%
 # Save final file as .rdata for easier read into app----
 
 #save(b5, mapframe, file = "looop.rdata")
-write.csv(river.data, file = "river_data.csv")
+#write.csv(river.data, file = "river_data.csv")
 save(river.data, file = "riverdata.rdata")
+save(mapframe, file = "mapframe.rdata")

@@ -34,19 +34,20 @@ ui <- dashboardPage(
       tabItems(
       tabItem(tabName = "Data",
       fluidRow(
-        box(plotOutput("plot1", height = 250)),
+        box(plotOutput("plot1", height = 350)),
         box(title = "Controls",
             selectInput("param_choices","Parameter:", param_choices),
             selectInput("site_choices", "Station:", sites),
             selectInput("depth","Depth:", NULL)
             ,
             uiOutput("date_slider")
-            ) #box
+            ), # box
+        leaflet::leafletOutput("mymap")
       )), # Row/data tab
       tabItem(tabName = "Meta",
       includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")),
       tabItem(tabName = "Topics",
-      href = "https://upstatefreshwater.org"),
+      h2("coming soon")),
       tabItem(tabName = "About",
       h2("coming soon"))
     ) # tab Items
@@ -57,6 +58,7 @@ ui <- dashboardPage(
 server <- function(input, output, session){
 
 load("riverdata.rdata")
+load("mapframe.rdata")
   
   site_choices <-reactive({
     return(subset(river.data, Station == input$site_choices))
@@ -101,6 +103,28 @@ load("riverdata.rdata")
       axis.text = element_text(size = 15)
       )
   })
+  
+  mymap <- createLeafletMap(session,"mymap")
+  session$onFlushed(once = T, function(){
+    output$mymap <- renderLeaflet({
+      leaflet() %>%
+        addProviderTiles(providers$Stamen.Terrain,
+                         options = providerTileOptions(noWrap = TRUE)
+        ) %>% setView(
+          lng = -76.354,
+          lat= 43.248,
+          zoom = 9
+        ) %>% addCircleMarkers(
+          lng = mapframe$long,
+          lat = mapframe$lat,
+          popup = paste0(
+            "Station: ",mapframe$Station, "<br>",
+            "Depth(s): ",mapframe$U.Depths, "<br>",
+            "Year(s): ",mapframe$U.Years),
+          labelOptions = labelOptions(textsize = "15px"))
+    })
+  })
+  
   }
 
 
