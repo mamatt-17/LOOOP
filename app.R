@@ -25,8 +25,12 @@ depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" =
 # Create User Interface (UI)----
 ui <- dashboardPage(
     dashboardHeader(title = "LOOOP"),
-    dashboardSidebar(),
-    dashboardBody(
+    dashboardSidebar(menuItem("Data Explorer",tabName = "Data", icon = icon("chart-bar")),
+                     menuItem("About the Data", tabName = "Meta"),
+                     menuItem("Topics", tabName = "Topics", icon = icon("lightbulb")),
+                     menuItem("About LOOOP", tabName = "About", icon = icon("question-circle"))),
+    dashboardBody(tabItems(
+      tabItem(tabName = "Data",
       fluidRow(
         box(plotOutput("plot1", height = 250)),
         box(title = "Controls",
@@ -35,8 +39,15 @@ ui <- dashboardPage(
             selectInput("depth","Depth:", NULL)
             ,
             uiOutput("date_slider")
-            )
-      ) # Row
+            ) #box
+      )), # Row/data tab
+      tabItem(tabName = "Meta",
+      h2("coming soon")),
+      tabItem(tabName = "Topics",
+      h2("coming soon")),
+      tabItem(tabName = "About",
+      h2("coming soon"))
+    ) # tab Items
     ) # Dash Body
   )# Dash Page
 
@@ -85,7 +96,7 @@ load("riverdata.rdata")
       theme(
       panel.border = element_rect(color = "black", fill = NA, size = 1),
       axis.ticks = element_line(color = "black", size = 1),
-      axis.text = element_text(size = 15)
+      axis.text = element_text(size = 20)
       )
   })
   }
