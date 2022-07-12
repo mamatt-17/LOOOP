@@ -24,7 +24,7 @@ sites <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430"
 depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
 # Create User Interface (UI)----
-ui <- dashboardPage(tags$head(includeHTML(("google-analytics.html"))),
+ui <- dashboardPage(
     dashboardHeader(title = "LOOOP"),
     dashboardSidebar(menuItem("Data",tabName = "Data", icon = icon("chart-bar")),
                      menuItem("Guide", tabName = "Meta", icon = icon("water")),
