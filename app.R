@@ -14,6 +14,7 @@ library(tidyr)
 library(ggplot2)
 library(knitr)
 library(scales)
+library(htmltools)
 
 # Choices for drop downs----
 param_choices <- c("Temperature (deg. C)"="Temp", "Specific Conductance (uS/cm)"="SC", "pH (units)"="pH", "Dissolved Oxygen (mg/L)"="DO", "Turbidity (NTU)"="Tn", "Chlorophyll-a (ug/L)"="Chl")
@@ -23,7 +24,7 @@ sites <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430"
 depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
 # Create User Interface (UI)----
-ui <- dashboardPage(
+ui <- dashboardPage(tags$head(includeHTML(("google-analytics.html"))),
     dashboardHeader(title = "LOOOP"),
     dashboardSidebar(menuItem("Data",tabName = "Data", icon = icon("chart-bar")),
                      menuItem("Guide", tabName = "Meta", icon = icon("water")),
