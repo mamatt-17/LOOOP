@@ -15,6 +15,7 @@ library(ggplot2)
 library(knitr)
 library(scales)
 library(htmltools)
+library(fontawesome)
 
 # Choices for drop downs----
 param_choices <- c("Temperature (deg. C)"="Temp", "Specific Conductance (uS/cm)"="SC", "pH (units)"="pH", "Dissolved Oxygen (mg/L)"="DO", "Turbidity (NTU)"="Tn", "Chlorophyll-a (ug/L)"="Chl")
@@ -23,37 +24,41 @@ sites <- c("B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430"
 
 depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
+
 # Create User Interface (UI)----
 ui <- dashboardPage(
-    dashboardHeader(title = "LOOOP"),
-    dashboardSidebar(menuItem("Data",tabName = "Data", icon = icon("chart-bar")),
-                     menuItem("Guide", tabName = "Meta", icon = icon("water")),
-                     menuItem("Topics", tabName = "Topics", icon = icon("lightbulb")),
-                     menuItem("About", tabName = "About", icon = icon("question-circle"))),
-    dashboardBody(
-      "Welcome to the LOOOP! Use the 'Data' Tab to begin exploring water quality data collected in the 3 Rivers System by the Upstate Freshwater Institute. Select the other tabs to learn more about the Lake Ontario Watershed and waterways!",
-      tabItems(
-      tabItem(tabName = "Data",
-      fluidRow(
-        box(plotOutput("plot1", height = 350)),
-        box(title = "Controls",
-            selectInput("param_choices","Parameter:", param_choices),
-            selectInput("site_choices", "Station:", sites),
-            selectInput("depth","Depth:", NULL)
-            ,
-            uiOutput("date_slider")
-            ), # box
-        leaflet::leafletOutput("mymap")
-      )), # Row/data tab
-      tabItem(tabName = "Meta",
-      includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")),
-      tabItem(tabName = "Topics",
-      h2("coming soon")),
-      tabItem(tabName = "About",
-      h2("coming soon"))
-    ) # tab Items
-    ) # Dash Body
-  )# Dash Page
+  dashboardHeader(title = "LOOOP"),
+  sidebar = dashboardSidebar(width = 250,
+                   sidebarMenu(id = "Data Explorer",
+                               menuItem("Data Explorer",tabName = "Data Explorer", icon = icon("chart-bar", verify_fa = FALSE)),
+                               menuItem("Explorer Guide", tabName = "Explorer Guide", icon = icon("lightbulb", verify_fa = FALSE)),
+                               menuItem("Water Quality Parameters", tabName = "Water Quality Parameters", icon = icon("water", verify_fa = FALSE)),
+                               menuItem("About", tabName = "About LOOOP", icon = icon("question-circle", verify_fa = FALSE)))),
+  dashboardBody(
+    tabItems(
+    tabItem(tabName = "Data Explorer",
+            fluidRow(
+              box(plotOutput("plot1", height = 350)),
+              box(title = "Controls",
+                  selectInput("param_choices","Parameter:", param_choices),
+                  selectInput("site_choices", "Station:", sites),
+                  selectInput("depth","Depth:", NULL),
+                  uiOutput("date_slider")),
+              leaflet::leafletOutput("mymap")
+            )
+            ),
+    tabItem(tabName = "Explorer Guide",
+            #includeMarkdown("StaticPosts/About-Data.Rmd")
+            ),
+    tabItem(tabName = "Water Quality Parameters",
+            #includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")
+            ),
+    tabItem(tabName = "About LOOOP",
+            #includeMarkdown("StaticPosts/Credits-Policies.Rmd")
+            )
+  ) 
+  ) 
+) 
 
 # Create server function (response to UI)----
 server <- function(input, output, session){
