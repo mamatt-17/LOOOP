@@ -1,7 +1,7 @@
 ---
 title: "About the Data"
 author: "Monica Matt"
-output:
+output: html_document
   html_document:
     toc: TRUE
 ---
@@ -24,3 +24,6 @@ If your selections cause an error message to appear, there is no data available 
 
 ## Why were these data collected?
 These data were collected at [navigational buoys](https://www.canals.ny.gov/wwwapps/navinfo/navinfo.aspx?waterway=eriecentral) in the 3 Rivers system which includes the Seneca River, Oneida River, and Oswego River. An electronic sonde that holds probes that can read multiple water quality parameters were deployed at these sites with some being held at fixed depths and others outfitted to take vertical profiles at all depths of the river. These data were funded by multiple grants and agencies including EMPACT, 
+
+## Where can I learn more about our local waterways?
+You can learn more about the characteristics and issues facing Lake Ontario, Oneida Lake, and Onondaga Lake at this [link](https://sites.google.com/view/looop-ufi/home). 

@@ -48,13 +48,13 @@ ui <- dashboardPage(
             )
             ),
     tabItem(tabName = "Explorer Guide",
-            #includeMarkdown("StaticPosts/About-Data.Rmd")
+            includeMarkdown("StaticPosts/About-Data.Rmd")
             ),
     tabItem(tabName = "Water Quality Parameters",
-            #includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")
+            includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")
             ),
     tabItem(tabName = "About LOOOP",
-            #includeMarkdown("StaticPosts/Credits-Policies.Rmd")
+            includeMarkdown("StaticPosts/Credits-Policies.Rmd")
             )
   ) 
   ) 

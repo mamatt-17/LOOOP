@@ -4,10 +4,15 @@ author: "David Andrews"
 date: "6/10/2022"
 output: html_document
 ---
+<style type = "text/css">
+  body{
+  font-size: 12pt;
+  }
+</style>
 
 # Physical and Chemical Parameter Descriptions and Their Importance to Water Quality
 
-The study of aquatic resources focuses on properties of water that are important to the overall health of a lake, pond, or stream. The foundation of life as we know it exists because of the unique properties of water that allow organisms to utilize it, and the environment that it creates. For example, because the density of solid water (ice) is lower than liquid water, ice floats, allowing biological processes to continue evern when the surface of a waterbody freezes. Globally, water mediates the climate due to it's high specific heat (simply put specific heat is the amount of energy required to warm or cool down 1 gram of water by 1 degree Celsius). If you have ever traveled to the coast of an ocean or a large inland lake such as one of the Laurentian Great Lakes, you have experienced the effects of this property of water as the air temperature cools the nearer you travel to water. On this page are descriptions of water quality parameters commonly collected as part of water quality monitoring for research and management purposes. This is by no means an all inclusive list since the collection of different types of data is focused depending on the goals of specific programs. 
+The study of aquatic resources focuses on properties of water that are important to the overall health of a lake, pond, or stream. The foundation of life as we know it exists because of the unique properties of water that allow organisms to utilize it, and the environment that it creates. For example, because the density of solid water (ice) is lower than liquid water, ice floats, allowing biological processes to continue even when the surface of a waterbody freezes. Globally, water mediates the climate due to it's high specific heat (simply put specific heat is the amount of energy required to warm or cool down 1 gram of water by 1 degree Celsius). If you have ever traveled to the coast of an ocean or a large inland lake such as one of the Laurentian Great Lakes, you have experienced the effects of this property of water as the air temperature cools the nearer you travel to water. On this page are descriptions of water quality parameters commonly collected as part of water quality monitoring for research and management purposes. This is by no means an all inclusive list since the collection of different types of data is focused depending on the goals of specific programs. 
 
 When reading through these descriptions try to consider the effect that one parameter might have on others. For example, with increasing depth the temperature of water changes, with different magnitudes depending on season as well as physical characteristics of a body of water such as depth, surface area, and flow to name a few. 
 
