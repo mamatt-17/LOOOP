@@ -27,6 +27,7 @@ depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" =
 
 # Create User Interface (UI)----
 ui <- navbarPage("LOOOP",
+                 tags$head(includeHTML(("google-analytics.html"))),
                  tabPanel("Data Explorer",
                           fluidRow(
                              box(plotOutput("plot1", height = 350)),
