@@ -1,26 +1,29 @@
 ---
-title: "About the Data"
-author: "Monica Matt"
-output: html_document
+#title: "About the Data"
+#author: "Monica Matt"
+output: 
   html_document:
-    toc: TRUE
+    toc: FALSE
 ---
-# About the Data
----  
 <style type = "text/css">
   body{
   font-size: 12pt;
   }
 </style>
+# Using the Data Explorer  
+ 
+
 ## Using the Map
 You can zoom in and out on the map by either selecting the plus(+)/minus(-) buttons in the top left-hand corner or scrolling with your mouse while the cursor is hovering over the map. You can move the map by clicking on the map and dragging the cursor.  
 
-Circles on this map indicate sampling locations used during monitoring programs conducted by the Upstate Freshwater Institute (UFI). If you click on a circle, the site name, depth at which data were collected, and years data were collected will appear in a pop-up box. _Note_, monitoring at these sites was not year-round and not all depths were monitored at each site/during each year. To exit out of this window you can select the X in the top right-hand corner or click the map or another sampling site.  
+Circles on this map indicate sampling locations used during monitoring programs conducted by the [Upstate Freshwater Institute (UFI)](www.upstatefreshwater.org). If you click on a circle, the site name, depth at which data were collected, and years data were collected will appear in a pop-up box. _Note_, monitoring at these sites was not year-round and not all depths were monitored at each site/during each year. To exit out of this window you can select the X in the top right-hand corner or click the map or another sampling site.  
 
 ## Plot Data
 Using the "Plot Options" box, you can create graphs showing common measurements of water quality over time. Use the dropdown box to first select a **Parameter**, or water quality measurement. Then select a **Station**. These stations were named after the navigational buoys in the 3 Rivers system that marked monitoring locations. Once you select a station, the **Depth** dropdown box will update to list all depths at that station with available data. Also, the **Date Range** will appear in the Plot Options box with the earliest monitoring date listed on the left and the most recent monitoring date listed on the right. You can move both ends of this sliding scale to change the timeframe (x-axis) shown on the graph. 
 
-If your selections cause an error message to appear, there is no data available for the criteria you have set. Make adjustments to the Date Range, Depth, or other input to reset the graph.
+If your selections cause an error message to appear, there is no data available for the criteria you have set. Make adjustments to the Date Range, Depth, or other input to reset the graph.  
+
+# About the Data
 
 ## Why were these data collected?
 These data were collected at [navigational buoys](https://www.canals.ny.gov/wwwapps/navinfo/navinfo.aspx?waterway=eriecentral) in the 3 Rivers system which includes the Seneca River, Oneida River, and Oswego River. An electronic sonde that holds probes that can read multiple water quality parameters were deployed at these sites with some being held at fixed depths and others outfitted to take vertical profiles at all depths of the river. These data were funded by multiple grants and agencies including EMPACT, 

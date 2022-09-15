@@ -1,7 +1,7 @@
 ---
 title: "Parameter Descriptions"
-author: "David Andrews"
-date: "6/10/2022"
+#author: "David Andrews"
+#date: "6/10/2022"
 output: html_document
 ---
 <style type = "text/css">

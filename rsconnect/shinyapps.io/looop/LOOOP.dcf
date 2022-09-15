@@ -5,10 +5,7 @@ account: looop
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6336051
-bundleId: 6301427
+bundleId: 6302479
 url: https://looop.shinyapps.io/LOOOP/
-when: 1663165827.22569
-lastSyncTime: 1663165827.22569
-asMultiple: FALSE
-asStatic: FALSE
-ignoredFiles: CSV_files/3Rivers/OneidaR.csv|CSV_files/3Rivers/OswegoR.csv|CSV_files/3Rivers/SenecaR.csv|google-analytics.html|river_data.csv
+when: 1663185090.96668
+lastSyncTime: 1663185090.96672

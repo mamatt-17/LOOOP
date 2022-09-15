@@ -1,17 +1,17 @@
 ---
-title: "Credits-Policies"
-author: "Monica Matt"
-output: html_document
+#title: "Credits-Policies"
+#author: "Monica Matt"
+output: 
   html_document:
-    toc: TRUE
+    toc: FALSE
 ---
-# Credits, Privacy Policy, and Licenses
----  
+
 <style type = "text/css">
   body{
   font-size: 12pt;
   }
 </style>
+
 
 ## About the LOOOP  
 The _**"Lake Ontario, Oneida, Onondaga Program (LOOOP)"**_ aims to provide high school teachers with the knowledge and resources to facilitate student-led investigations and discussions about environmental issues and stewardship relevant to the Great Lakes Basin. The Upstate Freshwater Institute (UFI), a not-for-profit corporation dedicated to advancing freshwater science and education in New York, began the LOOOP with nine partnering high schools across the region, the State University of New York College of Environmental Science and Forestry's Open Academy (SUNY-ESF OA), and the Onondaga-Cortland-Madison BOCES (OCM-BOCES) in 2021 with funding provided by the New York's Great Lakes Basin Small Grants Program. In 2022, the LOOOP received funding from the [National Oceanic and Atmospheric Administration's Bay Watershed Education and Training (B-WET)](https://sanctuaries.noaa.gov/bwet/greatlakes/) program for the Great Lakes region.
@@ -32,4 +32,4 @@ This site uses Google Analytics to allow tracking technologies and services on t
 If you would like to opt out of data collected on this site using Google Analytics, we encourage you to install this [add-on](https://tools.google.com/dlpage/gaoptout/?hl=en-GB) to your browser.
 
 ## Licenses  
-The purpose of this application is educational. Data and information displayed by this application allows users to share and adapt the presented materials for non-commercial use. These data should not be used for non-educational use, please contact [UFI](UFIContact@upstatefreshwater.org) if there are questions pertaining to the data or use of the data.
+The purpose of this application is educational. Data and information displayed by this application allows users to share and adapt the presented materials for non-commercial use. These data should not be used for non-educational purposes, please contact [UFI](UFIContact@upstatefreshwater.org) if there are questions pertaining to the data or use of the data.
