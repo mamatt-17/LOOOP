@@ -10,6 +10,16 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 filenames <- list.files(path = './CSV_files/3Rivers', pattern = '*', full.names = TRUE)
 b <- ldply(filenames, read.csv)
 
+# Weather Station data, read all files into 1 dataset----
+filenames <- list.files(path = './CSV_files/WeatherStations', pattern = '*', full.names = TRUE)
+w <- ldply(filenames, read.csv)
+# Stream Survey data, read in CSV----
+s <- read.csv(file = './CSV_files/StreamData.csv')
+# Stream level data, read all files into 1 dataset----
+filenames <- list.files(path = './CSV_files/StreamLevels', pattern = '*', full.names = TRUE)
+l <- ldply(filenames, read.csv)
+#----
+# 3 RIVERS----
 # Manipulated 3 Rivers data so that it meets requirements for visualizations----
 b$system.code <- as.character(b$system.code)
 b$date <- as.Date(b$date,format = "%m/%d/%Y")
@@ -138,32 +148,99 @@ river.data <- b5 %>% arrange(Date)
 mapframe <- as.data.frame(unique(b5[c("Station","U.Depths","lat","long","U.Years")]))
 
 
-# TESTING PLOT CODE FOR APP----
-#b6 <- b5 %>% filter(Station == "B211",params=="Temp",Depth == "2") %>% 
- # complete(Date = seq.Date(min(Date, na.rm = T), max(Date, na.rm = T), by = 'day')) %>% 
-#fill(c(Station, Depth, params ,lat, long, U.Depths, U.Years))%>% 
- # mutate(Abs.Time = replace_na(Abs.Time, "00:00:00"),
-  #       Datetime = as.POSIXct(paste(Date, Abs.Time), format = "%Y-%m-%d %H:%M" ))
+# ----
+# WEATHER STATION DATA----
+# Restructure dataframe----
+w$Group <- as.factor(as.character(w$Group))
+w$Site.Name <-as.factor(as.character(w$Site.Name))
+w$Date <- as.Date(w$Date,format = "%m/%d/%Y")
+w$WindDirection <- as.factor(as.character(w$WindDirection))
 
-#ggplot(data = b6, mapping = aes(x = Datetime, y = value))+
- # geom_point(size = 2)+
-#  geom_line()+
- # theme_minimal()+
-  #scale_y_continuous(name =  "Temperature (deg. C)",
-   #                  limits = c(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),
-    #                 breaks = c(seq(floor(min(b6$value, na.rm = T)),ceiling(max(b6$value,na.rm = T))),.5))+
-  #scale_x_datetime(name = "Date",
-  #                 date_breaks = "1 month",
-   #                date_labels = "%b %y",
-    #               date_minor_breaks = "1 day")+
-  #theme(
-  #  panel.border = element_rect(color = "black", fill = NA, size = 1),
-  #  axis.ticks = element_line(color = "black", size = 1),
-  #  axis.text = element_text(size = 12)
-  #)
+# Round Times to the nearest quarter hour and make new dataframe with just hourly data for app----
+w$Datetime <- as.POSIXct(paste(w$Date, w$Time), format = "%Y-%m-%d %H:%M:%S")
+w$Datetime <- round_date(w$Datetime, "15 minutes")
+w <- w %>% select(!c(Date, Time))
+# Rename Parameter columns----
+w <- w %>% rename(., 'Rain (mm)' = Rain.mm, 'Temperature (deg. C)' = Temp, 'Relative Humidity (%)' = RH,
+                  'Wind Speed (m/s)' = WindSpeed.ms, 'Gust Speed (m/s)' = GustSpeed.ms,
+                  'Wind Direction (theta)' = WindDirection.theta, 'Wind Direction' = WindDirection)
+# Reshape to long format with a parameters column----
+w.long <- w %>% pivot_longer(!c(Group, Site.Name, Latitude, Longitude, Datetime, 'Wind Direction'), 
+                             names_to = "params", values_to = "Result")
+# Create hourly dataframe for app----
+w.long <- w.long %>% group_by(Datetime = round_date(Datetime, 'hour'), Group, Site.Name, Latitude, Longitude, params) %>% 
+  summarise(Result = round(mean(Result, na.rm = T), 2)) %>% ungroup()
+
+# Pull out hourly wind theta to recalculate average wind direction and append to dataframe----
+windtheta <- w.long %>% filter(params == "Wind Direction (theta)")
+windtheta <- windtheta %>% mutate(winddir = round(1+(Result)/45, 0)) %>% 
+  mutate('Wind Direction' = lapply(winddir,
+                                   function(y)
+                                     if (y == 1)
+                                       "North" else
+                                         if (y == 2)
+                                           "North-East" else
+                                             if (y == 3)
+                                               "East" else
+                                                 if (y == 4)
+                                                   "South-East" else
+                                                     if (y == 5)
+                                                       "South" else
+                                                         if (y == 6)
+                                                           "South-West" else
+                                                             if (y == 7)
+                                                               "West" else
+                                                                 if (y == 8)
+                                                                   "North-West" else
+                                                                     if (y == 9)
+                                                                       "North"
+                                   )) %>% select(c(Datetime, Group, Site.Name, Latitude, Longitude, 'Wind Direction'))
+
+# Add Summarized Wind Direction back to hourly dataframe
+w.long <- w.long %>% left_join(windtheta) %>% relocate('Wind Direction', .after = Longitude)
+
+rm(windtheta)
+
+#----
+# STREAM SURVEY DATA----
+# Restructure dataframe----
+s$Group <- as.factor(as.character(s$Group))
+s$Site.Name <- as.factor(as.character(s$Site.Name))
+s$Location <- as.factor(as.character(s$Location))
+s$Date <- as.Date(s$Date,format = "%m/%d/%Y")
+s$Datetime <- as.POSIXct(paste(s$Date, s$Time), format = "%Y-%m-%d %H:%M")
+s$Datetime <- round_date(s$Datetime, "1 hour")
+s <- s %>% select(!c(Date, Time)) %>% relocate(Datetime, .after = Longitude)
+s$Water.Temperature <- as.numeric(as.character(s$Water.Temperature))
+s$Air.Temperature <-as.numeric(as.character(s$Air.Temperature))
+s$Nitrite <- as.numeric(as.character(s$Nitrite))
+s$Nitrate <- as.numeric(as.character(s$Nitrate))
+s$Alkalinity <- as.numeric(as.character(s$Alkalinity))
+s$pH <- as.numeric(as.character(s$pH))
+s$Dissolved.Oxygen <- as.numeric(as.character(s$Dissolved.Oxygen))
+s$Chloride <- as.numeric(as.character(s$Chloride))
+s$Turbidity <- as.numeric(as.character(s$Turbidity))
+s$Biological.Index <-as.numeric(as.character(s$Biological.Index))
+
+
+# Rename Parameter columns----
+s <- s %>% rename(., 'Water Temperature (deg. C)' = Water.Temperature, 'Air Temperature (deg. C)' = Air.Temperature, 'Stream Width (ft)' = Stream.Width,
+                  'Average Stream Depth (ft)' = Avg.Stream.Depth, 'Stream Area (square ft)' = Stream.Area, 'Average Stream Velocity (ft/s)' = Avg.Stream.Velocity,
+                  'Streamflow (cubic ft/s)' = Streamflow, 'Nitrite (mg/L)' = Nitrite, 'Nitrate (mg/L)' = Nitrate, 'Alkalinity (mg/L)' = Alkalinity, 'pH (units)' = pH,
+                  'Dissolved Oxygen (mg/L)' = Dissolved.Oxygen, 'Phosphate (mg/L)' = Phosphate, 'Chloride (mg/L)' = Chloride, 'Turbidity (cm)' = Turbidity,
+                  'Macroinvertebrates Present' = Macroinvertebrates, 'Biological Index Score' = Biological.Index)
+# Reshape to long format with a parameters column----
+s.long <- s %>% pivot_longer(!c(Group, Site.Name, Location ,Latitude, Longitude, Datetime, 'Macroinvertebrates Present'),
+                             names_to = "params", values_to = "Result")
+
+
+#----
+# STREAM LEVEL DATA----
+#----
 # Save final file as .rdata for easier read into app----
 
 #save(b5, mapframe, file = "looop.rdata")
 #write.csv(river.data, file = "river_data.csv")
-save(river.data, file = "riverdata.rdata")
-save(mapframe, file = "mapframe.rdata")
+#save(river.data, file = "riverdata.rdata")
+#save(mapframe, file = "mapframe.rdata")
+save(s.long, w.long, file = "student.rdata")

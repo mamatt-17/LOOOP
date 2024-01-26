@@ -1,0 +1,4 @@
+Group,Site.Name,Location,Latitude,Longitude,Date,Time,Water.Temperature,Air.Temperature,Stream.Width,Avg.Stream.Depth,Stream.Area,Avg.Stream.Velocity,Streamflow,Nitrite,Nitrate,Alkalinity,pH,Dissolved.Oxygen,Phosphate,Chloride,Turbidity,Macroinvertebrates,Biological Index
+Jamesville-Dewitt Middle,Butternut Creek,Fiddlers Green Park,42.998944,-76.072056,10/3/2023,8:30,,,37.7,1.52,57.3,0.73,41.83,0,0,,7,10,0.05,,115,"Caddisflies,Mayflies,Stoneflies,Watersnipe Flies, Riffle Beetles,Water Pennies, Dobsonflies, Fishflies,Crayfish, Aquatic Worms",20
+Onondaga Earth Corps,Ninemile Creek,Honeywell Canoe and Kayak Launch,43.077898,-76.227886,9/27/2023,9:00,,,65.875,0.95,62.58,0.72,45.06,,,,,,,,,,
+Jamesville-Dewitt Middle,Butternut Creek,Fiddlers Green Park,42.998944,-76.072056,3/20/2023,8:30,3,,,,,,,,0,,7,12,,,,"Caddisflies,Mayflies,Fishflies,Crane Flies, Net-spinning Caddisfiles, Crayfish, Scuds,Aquatic Worms, Black Flies, Midge Flies",23

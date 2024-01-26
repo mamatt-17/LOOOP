@@ -2,11 +2,12 @@
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
-#library(rsconnect)
+library(rsconnect)
 library(leaflet)
 library(rstudioapi)
 library(shinycssloaders)
 library(rmarkdown)
+library(markdown)
 library(lubridate)
 library(plyr)
 library(dplyr)
@@ -16,28 +17,28 @@ library(knitr)
 library(scales)
 library(htmltools)
 library(fontawesome)
+library(DT)
 
-# Choices for drop downs----
-param_choices <- c("Temperature (deg. C)"="Temp", "Specific Conductance (uS/cm)"="SC", "pH (units)"="pH", "Dissolved Oxygen (mg/L)"="DO", "Turbidity (NTU)"="Tn", "Chlorophyll-a (ug/L)"="Chl")
-
-sites <- c("Select a Station","B143", "B148", "B211", "B22", "B224", "B266", "B317", "B409", "B430", "CROSS")
-
-depth_choices <-list("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "6" = 6, "7" = 7)
 
 
 # Create User Interface (UI)----
 ui <- navbarPage("LOOOP",
-                 tags$head(includeHTML(("google-analytics.html"))),
+                 header = (includeHTML(("google-analytics.html"))),
                  tabPanel("Data Explorer",
                           fluidRow(
-                             box(plotOutput("plot1", height = 350)),
+                             box(uiOutput("plotui")),
                              box(title = "Controls",
-                                 selectInput("param_choices","Parameter:", param_choices),
-                                 selectInput("site_choices", "Station:", sites),
-                                 selectInput("depth","Depth:", NULL),
-                                 uiOutput("date_slider")),
-                             leaflet::leafletOutput("mymap")
-                           )
+                                 selectInput("data_type", "Monitoring Type:", choices = list('Stream Survey' = "s", 'Weather Station' = "w"), selected = "w"),
+                                 selectInput("site_choices", "Site:", choices = NULL),
+                                 selectInput("param_choices","Parameter:", choices = NULL),
+                                 uiOutput("date_slider"))
+                           ),
+                          fluidRow(
+                            box(h4("Points within box"),
+                                   DT::dataTableOutput("brush_info")
+                            ),
+                            box(leaflet::leafletOutput("mymap")
+                          ))
                           ),
                  tabPanel("Explorer Guide",
                           includeMarkdown("StaticPosts/About-Data.Rmd")
@@ -54,83 +55,152 @@ ui <- navbarPage("LOOOP",
 # Create server function (response to UI)----
 server <- function(input, output, session){
   showModal(modalDialog(title = "Welcome to the LOOOP!",
-                        "Use the Plot Options to begin exploring data collected by the Upstate Freshwater Institute.
-                        Click outside of this box and select a Station to get started!",
+                        "Use the Plot Options to begin exploring data collected by students and youth in Central New York.
+                        Click outside of this box and select a dropdown option to get started!",
                         size = "l",
                         easyClose = T,
                         footer = NULL))
             
-load("riverdata.rdata")
-load("mapframe.rdata")
-  
-  site_choices <-reactive({
-    return(subset(river.data, Station == input$site_choices))
-  })
-  
-  observeEvent(site_choices(),{
-    d.choices <- unique(na.omit(site_choices()$Depth))
-    updateSelectInput(inputId = "depth", choices = d.choices)
-  })
-  
-  depth <- reactive({
-    req(input$depth)
-    filter(site_choices(), Depth == input$depth)
-  })
-  
-  output$date_slider <- renderUI({
-    req(input$site_choices)
-    date_min= min(site_choices()$Datetime)
-    date_max = max(site_choices()$Datetime)
-    sliderInput("date_slider","Date Range:", min = date_min, max = date_max, value = c(date_min,date_max),timezone = "EST")
-  })
-  
-  
-  our.data <- reactive({
-    return(subset(river.data, (params %in% input$param_choices & Station %in% input$site_choices & Depth %in% input$depth | is.na(Abs.Depth))))
-   return(subset(river.data, (Datetime >= input$date_slider[1] & Datetime <= input$date_slider[2])))
-  })
-  
+load("student.rdata")
 
-  output$plot1 <- renderPlot({
-    ggplot(data = our.data(), mapping = aes(x = Datetime, y = value))+
-      geom_point(size = 2)+
-      geom_line()+
-      theme_minimal()+
-      labs(x = "Date", y = names(param_choices[which(param_choices == input$param_choices)]))+
-      scale_x_datetime(limits = c(input$date_slider[1],input$date_slider[2]),
-                       breaks = breaks_pretty(),
-                       labels = label_date_short(format = c("%Y", "%b", "%d", "%H:%M"), sep = "\n"))+
-      theme(
-      panel.border = element_rect(color = "black", fill = NA, size = 1),
-      axis.ticks = element_line(color = "black", size = 1),
-      axis.text = element_text(size = 15)
-      )
-  })
-  
-  mymap <- createLeafletMap(session,"mymap")
-  session$onFlushed(once = T, function(){
-    output$mymap <- renderLeaflet({
-      leaflet() %>%
-        addProviderTiles(providers$Stamen.Terrain,
-                         options = providerTileOptions(noWrap = TRUE)
-        ) %>% setView(
-          lng = -76.354,
-          lat= 43.248,
-          zoom = 9
-        ) %>% addCircleMarkers(
-          lng = mapframe$long,
-          lat = mapframe$lat,
-          popup = paste0(
-            "Station: ",mapframe$Station, "<br>",
-            "Depth(s): ",mapframe$U.Depths, "<br>",
-            "Year(s): ",mapframe$U.Years),
-          labelOptions = labelOptions(textsize = "15px"))
-    })
-  })
-  
+# Create reactive control box options based on selected dataset (stream surveys or weather station)
+datasetInput <- reactive({
+  if(input$data_type == "s"){
+    selected.dataset <- s.long
   }
+  else if(input$data_type == "w"){
+    selected.dataset <- w.long
+  }
+return(selected.dataset)
+  })
+
+# Using reactive dataset element, update dropdown choices for sites and parameters
+observeEvent(datasetInput(),{
+  s.choices <- unique(na.omit(datasetInput()$Site.Name))
+  updateSelectInput(session,inputId = "site_choices", "Site:", choices = s.choices, selected = NULL)
+})
+
+observeEvent(datasetInput(),{ 
+  p.choices <- unique(na.omit(datasetInput()$params))
+  updateSelectInput(session, inputId = "param_choices", "Parameter:", choices = p.choices, selected = NULL)
+})
+
+# Using reactive dataset, update date range to min and max of dataset and filtered site
+output$date_slider <- renderUI({
+  req(input$site_choices)
+  date_min= min(datasetInput()$Datetime[datasetInput()$Site.Name == input$site_choices])
+  date_max = max(datasetInput()$Datetime[datasetInput()$Site.Name == input$site_choices])
+  sliderInput("date_slider","Date Range:", min = date_min, max = date_max, value = c(date_min,date_max), step = 3600, timezone = "EST")
+}) 
+
+# Create a reactive dataframe that subsets the selected dataset based on selected choices for graphing
+our.data <- reactive({
+  if(input$data_type == "s"){
+    return(subset(s.long, (params %in% input$param_choices & Site.Name %in% input$site_choices
+                           & Datetime >= input$date_slider[1] & Datetime <= input$date_slider[2])))
+  }
+  else if(input$data_type == "w"){
+    return(subset(w.long, (params %in% input$param_choices & Site.Name %in% input$site_choices
+                           & Datetime >= input$date_slider[1] & Datetime <= input$date_slider[2])))
+  }
+})
+
+# Create interactive plot
+output$plotui <- 
+  renderUI({
+  plotOutput("plot", height = 350,
+             brush = brushOpts(
+               id = "plot_brush"
+             ))
+})
+
+# Make reactive elements for plotting purposes
+plottinginfo <- reactive({
+  if(input$data_type == "s"){
+    majorbreaks <- "day"
+    minorbreaks <- "day"
+    datelabels <- "%b %d"
+  }
+  else if(input$data_type == "w"){
+    majorbreaks <- "day"
+    minorbreaks <- "1 hour"
+    datelabels <- "%b %d"
+  }
+  return(data.frame(majorbreaks, minorbreaks, datelabels))
+})
+
+# Plotting framework
+output$plot <- renderPlot({
+  ggplot(data = our.data(), mapping = aes(x = Datetime, y = Result))+
+        geom_point(size = 2)+
+        geom_line()+
+        theme_minimal()+
+        labs(x = "Date", y = input$param_choices)+
+        scale_x_datetime(limits = c(input$date_slider[1],input$date_slider[2]),
+                         breaks = plottinginfo()$majorbreaks,
+                         minor_breaks = plottinginfo()$minorbreaks,
+                         labels = date_format(plottinginfo()$datelabels, tz = "America/New_York")
+        )+
+        theme(
+          panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+          axis.ticks = element_line(color = "black", linewidth = 1),
+          axis.text = element_text(size = 15)
+        )
+    })
+
+# Make reactive elements for brush table
+tableinfo <- reactive({
+  if(input$data_type == "s"){
+    selectedinfo <- 'Macroinvertebrates Present'
+  }
+  else if(input$data_type == "w"){
+    selectedinfo <- "Wind Direction"
+  return(selectedinfo)
+  }
+})
+
+# Make data table that contains information related to what is boxed in plot
+output$brush_info <- DT::renderDataTable({
+  res <- brushedPoints(our.data() %>% select(., c(Datetime, Group, Latitude, Longitude, tableinfo(), Result)), input$plot_brush)
+  datatable(res)
+})
+
+# Making the map
+mymap <- createLeafletMap(session,"mymap")
+
+output$mymap <- renderLeaflet({
+    leaflet() %>%
+      addProviderTiles(providers$Stadia.StamenTerrain,
+                       options = providerTileOptions(noWrap = TRUE)
+      ) %>% setView(
+        lng = -76.176684,
+        lat= 43.082970,
+        zoom = 10
+      ) %>% addCircleMarkers(
+        lng = s.long$Longitude,
+        lat = s.long$Latitude,
+        color = "blue",
+        popup = paste0(
+          "Location: ",s.long$Location, "<br>",
+          "Latest Monitoring Date: ", format(s.long$Datetime, "%m/%d/%Y"), "<br>",
+          "Group(s): ",s.long$Group),
+        labelOptions = labelOptions(textsize = "15px")
+        ) %>% addCircleMarkers(
+      lng = w.long$Longitude,
+      lat = w.long$Latitude,
+      color = "red",
+      popup = paste0(
+        "Location: ",w.long$Site.Name, "<br>",
+        "Latest Monitoring Date: ", format(w.long$Datetime, "%m/%d/%Y"), "<br>",
+        "Group(s): ",w.long$Group),
+      labelOptions = labelOptions(textsize = "15px")
+        )
+  })
 
 
+
+
+}
 ## Run app----
 shinyApp(ui = ui, server = server)
 
