@@ -1,6 +1,6 @@
 ---
 #title: "About the Data"
-#author: "Monica Matt"
+#author: "Monica Caves"
 output: 
   html_document:
     toc: FALSE
@@ -16,17 +16,23 @@ output:
 ## Using the Map
 You can zoom in and out on the map by either selecting the plus(+)/minus(-) buttons in the top left-hand corner or scrolling with your mouse while the cursor is hovering over the map. You can move the map by clicking on the map and dragging the cursor.  
 
-Circles on this map indicate sampling locations used during monitoring programs conducted by the [Upstate Freshwater Institute (UFI)](www.upstatefreshwater.org). If you click on a circle, the site name, depth at which data were collected, and years data were collected will appear in a pop-up box. _Note_, monitoring at these sites was not year-round and not all depths were monitored at each site/during each year. To exit out of this window you can select the X in the top right-hand corner or click the map or another sampling site.  
+Circles on this map indicate monitoring locations of <span style="color:blue">streams</span> and <span style="color:red">weather</span> with data collected by student groups and local youth! If you click on a circle, the site name, latest data collection date, and the group that collected the data will appear in a pop-up box. _Note_, monitoring at these sites was not year-round and not all parameters were monitored at each site. To exit out of the pop-up window, you can select the X in the top right-hand corner or click the map or another sampling site.  
 
 ## Plot Data
-Using the "Plot Options" box, you can create graphs showing common measurements of water quality over time. Use the dropdown box to first select a **Parameter**, or water quality measurement. Then select a **Station**. These stations were named after the navigational buoys in the 3 Rivers system that marked monitoring locations. Once you select a station, the **Depth** dropdown box will update to list all depths at that station with available data. Also, the **Date Range** will appear in the Plot Options box with the earliest monitoring date listed on the left and the most recent monitoring date listed on the right. You can move both ends of this sliding scale to change the timeframe (x-axis) shown on the graph. 
+Using the "Plot Options" box, you can create graphs showing measurements of water quality or weather over time. Use the dropdown box to first select to view either **Stream** or **Weather** datasets. After selecting your dataset, select a **Site**. Note that if you are looking at <span style="color:blue">stream data</span>, then you will be graphing the data of all monitoring locations along that stream and there may be more than one monitoring location along the length of the stream. Next, select your desired **Parameter**, or environmental measurement. The selected parameter will populate your graph (y-axis). Once you have made these selections, the **Date Range** will appear in the Plot Options box with the earliest monitoring date listed on the left and the most recent monitoring date listed on the right. You can move both ends of this sliding scale to change the timeframe (x-axis) shown on the graph. 
 
-If your selections cause an error message to appear, there is no data available for the criteria you have set. Make adjustments to the Date Range, Depth, or other input to reset the graph.  
+There may be limited data collected at any particular site. If your selections do not produce any points on the graph, there is no data available for the criteria you have set.Make adjustments to the drop-down choices to reset the graph.  
 
 # About the Data
 
 ## Why were these data collected?
-These data were collected at [navigational buoys](https://www.canals.ny.gov/wwwapps/navinfo/navinfo.aspx?waterway=eriecentral) in the 3 Rivers system which includes the Seneca River, Oneida River, and Oswego River. An electronic sonde that holds probes that can read multiple water quality parameters were deployed at these sites with some being held at fixed depths and others outfitted to take vertical profiles at all depths of the river. These data were funded by the EMPACT (Environmental Monitoring for Public Access and Community Tracking) program by the US Environmental Protection Agency.
+These data were collected by students as part of the [Upstate Freshwater Institute's (UFI)](www.upstatefreshwater.org) _**"Lake Ontario, Oneida, Onondaga Program (LOOOP)"**_. As part of this program, student groups can borrow supplies and equipment to monitor weather, stream water quality, stream macroinvertebrate communities, and streamflow in our local watersheds. The _**"Lake Ontario, Oneida, Onondaga Program (LOOOP)"**_ aims to provide high school teachers with the knowledge and resources to facilitate student-led investigations and discussions about environmental issues and stewardship relevant to the Great Lakes Basin
+
+## What kind of equipment or supplies do I need to collect environmental data?
+Currently our app is able to show data that is collected in streams using Izaak Walton League or GLOBE protocols. Our equipment loan program offers water chemistry testing kits, nets, and measuring tools that are needed to make these observations. Learn more about the stream parameters by clicking on the navigation tab! Our app also shows hourly data of weather parameters collected using a Onset HOBO® weather station. Each weather station is outfitted with the same sensors and students may choose at what frequency to collect data. Learn more about the weather parameters by clicking on the navigation tab!
+
+## How can I submit data to this app?
+We are currently developing a Google Form that will allow students to submit data to UFI for display on the application. Weather data is collected by an electronic weather station and is uploaded to the app as soon as the equipment is returned to UFI or emailed to UFI staff.
 
 ## Where can I learn more about our local waterways?
-You can learn more about the characteristics and issues facing Lake Ontario, Oneida Lake, and Onondaga Lake at this [link](https://sites.google.com/view/looop-ufi/home). 
+You can learn more about the characteristics and issues facing Lake Ontario, Oneida Lake, and Onondaga Lake at this [link](https://sites.google.com/view/looop-ufi/home).  Follow us @lake_looop on [Instagram](https://www.instagram.com/lake_looop/)!

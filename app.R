@@ -43,10 +43,12 @@ ui <- navbarPage("LOOOP",
                  tabPanel("Explorer Guide",
                           includeMarkdown("StaticPosts/About-Data.Rmd")
                           ),
-                 tabPanel("Water Quality Parameters",
-                          includeMarkdown("StaticPosts/Parameter_Descriptions.Rmd")
+                 tabPanel("Stream Parameters",
+                          h4("In Development")
                           ),
-                 tabPanel("About LOOOP",
+                 tabPanel("Weather Parameters",
+                          h4("In Development")),
+                 tabPanel("Credits/Policies",
                           includeMarkdown("StaticPosts/Credits-Policies.Rmd")
                           ),
                  collapsible = TRUE,
