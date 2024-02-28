@@ -1,0 +1,54 @@
+---
+title: "Stream_Descriptions"
+#author: "Monica Caves", "David Andrews"
+#date: "2024-02-08"
+ html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: TRUE
+---
+<style type = "text/css">
+  body{
+  font-size: 12pt;
+  }
+</style>
+
+# Stream Monitoring Parameters and Their Importance to Water Quality
+
+Studying the properties of water is essential to _**limnology**_ or the study of the biological, chemical, and physical features of fresh water (including streams and lakes). The foundation of life as we know it exists because of the unique properties of water! Many organisms depend on access to healthy waterways and our climate is even influenced by the presence of water. Globally, water mediates the climate due to its high specific heat or the amount of energy required to warm or cool down 1 gram of water by 1 degree Celsius. If you have ever traveled to the coast of an ocean or a large inland lake such as one of the Laurentian Great Lakes, you may have noticed that the air temperature is cooler near the water. On hot days the land and the air above land heats up faster than the waterbodies and cool air above them. As the warm air from the land rises, cool air from the water rushes in to replace that air.
+
+On this page are descriptions of parameters commonly collected or measured as part of a stream monitoring program. When reading through these descriptions, think about how one parameter affect others!
+
+## Temperature
+
+Water temperature is one of the most critical factors driving the overall characteristics of a waterbody. Water density changes with water temperature, creating a unique phenomenon where cold, dense water underlies warmer upper layers during periods of high air temperature; this is known as "thermal stratification". Those who live in temperate regions are likely familiar with this if they have swam in a stratified body of water and dove down to the "thermocline" which is where the warm upper layer and cool bottom layer meet and temperature changes rapidly. When the air drops below freezing ice is formed at the surface because the density of ice is less than water. Perhaps more remarkably, under the ice water that is four degrees Celsius is actually the most dense as a result of chemical properties of water molecules. This unique trait results in a characteristic known as "reverse thermal stratification" where the warmest water (4°C) is on the bottom!!! Thermal stratification cannot always be observed in flowing waters, but may occur in deeper pools within stream reaches. Temperatures in streams can be influenced by the amount of shaded reaches, turbidity, stream discharge, and inputs to the stream (i.e., surface runoff, industrial/commercial discharge). 
+
+Many organisms can only live in environments that maintain their optimal temperature requirements. For example, cold-water fishes, like trout and salmon, and macroinvertebrates are most active in colder waters (7-18 C or 45-65 F) and become stressed or perish when waters exceed their temperature threshold. 
+
+## Dissolved Oxygen
+
+Just as for terrestrial life, biological life in water requires oxygen to survive (barring some sulfate based life in the deep oceans near volcanic vents). Like all other compounds, oxygen must be dissolved in water and therefore competes for "space" with other dissolved compounds (if there are a lot of other dissolved compounds, less oxygen can be dissolved). Additionally, it is impacted by temperature (higher temperature water is capable of holding less dissolved oxygen than colder temperature water), biological respiration (uptake), decomposition (uptake), and photosynthesis (output). The amount of dissolved oxygen that water holds is one of the most important parameters of water quality. We typically think of oxygen as critical to respiration, and this is true in water where insufficient levels can result of aquatic organism die-offs. However, dissolved oxygen is also important for chemical processes in water that impact overall water quality. Many compounds are tightly bound and unavailable for organisms to use in the presence of oxygen, including limiting nutrients for photosynthesis and toxic heavy metals, but are liberated and "bio-available" when oxygen becomes depleted. In stratified bodies of water (cool water below, warm water at the surface), the lack of mixing of the cool layer that lies at the bottom accompanied by respiration and decompositional processes (utilizing oxygen), often results in dissolved oxygen depletion in the cold, deep zones. When this layer mixed upward as the upper water cools during fall, these liberated compounds can be distributed upward and cause water quality problems. 
+
+## pH (Potential of Hydrogen)
+
+Most people have been exposed to the idea of pH through the concept of acidity and may recognize that a low pH means that a solution is acidic. They may even know that a pH of 7.0 means that a solution is "neutral" and a pH greater than 7.0 is considered "basic". But what are these values relative to? The answer may seem somewhat complicated: pH is a measure of the concentration of hydrogen ions in solution. Remember that water is made up of two hydrogen atoms and one oxygen atom ( H2O). Water molecules can actually break apart into two parts (a free hydrogen H, and what is known as a hydroxide group (OH)), and when the pH is neutral the concentration of each of these is the same. Only in situations where a compound which increases the free hydrogen (aka an acid) or a compound which increases the hydroxide concentration (aka a base) is introduced does the pH of water change. This property of water plays an important role in waters ability to hold other important compounds in solution, as well as in biological functioning critical to sustain life including respiration across gill membranes. A lower pH allows more compounds to be in solution, and also affects the bio-availability of dissolved compounds (the ability for a compound to be taken in by an organism). While understanding pH, how it is measured, what different values mean, and what impacts it in the environment can be difficult at first, a good starting point for understanding is that typical pH values in surface water (lakes, ponds, and rivers) ranges from about 6.0 - 8.0, and it is normal to observe moderate variability in pH levels during a single sample at various depths and or locations due to chemical, physical, and biological processes happening in the water. Very low (less than 5.0) or very high (above 9.0) pH reading are indicative of water quality impairment. For further explanation follow this link: [US Geological Survey: pH and Water]("https://www.usgs.gov/special-topics/water-science-school/science/ph-and-water")
+
+## Turbidity
+
+Turbidity measures the relative clarity of water which is impacted by both biological (algae) and inorganic (sediment) materials suspended in the water column. Measurements of turbidity can pick up on both large algal populations (blooms) as well as erosion induced sediment loading, or sediment re-suspension caused by turbulence from wave action or subsurface currents. High turbidity is associated with poor water quality. Turbidity is reported in "Nephelometric Turbidity Units" or NTU where 1 milligram of suspended material in one liter of water is equal to 3.0 NTU. 
+
+## Nitrate and Nitrite
+
+
+
+## Phosphate or Orthophosphate
+
+In the 1970's in Canada's Experimental Lakes Area, it was demonstrated that phosphorus was limiting in most freshwater aquatic ecosystems through a series of whole lake experiments ([Clean Lakes Alliance - Phosphorus]("https://www.cleanlakesalliance.org/phosphorus/")). Since then researchers and managers alike have focused on reducing phosphorus inputs to freshwater systems with the goal of minimizing human induced increases in primary productivity (algal blooms). Orthophosphate is a form of phosphorus that is readily available and usable to primary producers, and therefore is directly related to the capacity of a waterbody to support algal populations.  
+
+## Chloride
+
+## Alkalinity
+
+## Macroinvertebrates or Biological Indicators
+
+## Stream Morphology (Velocity, Area, and Discharge)

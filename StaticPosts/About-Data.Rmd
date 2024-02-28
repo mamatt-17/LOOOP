@@ -23,6 +23,10 @@ Using the "Plot Options" box, you can create graphs showing measurements of wate
 
 There may be limited data collected at any particular site. If your selections do not produce any points on the graph, there is no data available for the criteria you have set.Make adjustments to the drop-down choices to reset the graph.  
 
+## Interactive Plot/Data Table Generation
+After selecting the parameters and creating a plot, you will be able to interact directly with the data on the plot to generate a data table! Select points of interest on your plot by clicking and dragging your mouse to form a rectangular selection. Additional information about the data that are in your selected area will appear in the table underneath the plot.
+
+
 # About the Data
 
 ## Why were these data collected?
