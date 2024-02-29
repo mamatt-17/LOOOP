@@ -44,7 +44,7 @@ ui <- navbarPage("LOOOP",
                           includeMarkdown("StaticPosts/About-Data.Rmd")
                           ),
                  tabPanel("Stream Parameters",
-                          h4("In Development")
+                          includeMarkdown("StaticPosts/Stream_Descriptions.Rmd")
                           ),
                  tabPanel("Weather Parameters",
                           h4("In Development")),
