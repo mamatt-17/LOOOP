@@ -22,7 +22,7 @@ library(DT)
 
 
 # Create User Interface (UI)----
-ui <- navbarPage("LOOOP",
+ui <- navbarPage(title =  a("LOOOP", href = "https://sites.google.com/view/looop-ufi/", style = "color:gray;"),
                  header = (includeHTML(("google-analytics.html"))),
                  tabPanel("Data Explorer",
                           fluidRow(
@@ -47,7 +47,7 @@ ui <- navbarPage("LOOOP",
                           includeMarkdown("StaticPosts/Stream_Descriptions.Rmd")
                           ),
                  tabPanel("Weather Parameters",
-                          h4("In Development")),
+                          includeMarkdown("StaticPosts/Weather_Descriptions.Rmd")),
                  tabPanel("Credits/Policies",
                           includeMarkdown("StaticPosts/Credits-Policies.Rmd")
                           ),

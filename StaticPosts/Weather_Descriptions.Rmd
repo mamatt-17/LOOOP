@@ -1,0 +1,57 @@
+---
+title: "Weather Descriptions"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    toc_collapsed: TRUE
+---
+
+
+<style type = "text/css">
+  body{
+  font-size: 12pt;
+  }
+</style>
+
+_**Meteorology**_ is the scientific study of the Earth's atmosphere and weather. The atmosphere is like a big blanket of gases surrounding the Earth that is mostly made of nitrogen and oxygen. There is other elements like water vapor and carbon dioxide present which can influence our weather and climate.
+
+Meteorologists observe weather and study its patterns to provide information that many people depend on! Weather forecasting uses data to predict what the weather will be like in the coming days. It helps people plan things like picnics, outdoor events, or even when to prepare for an incoming storm. Understanding the weather also is important for agriculture, aviation, and building new homes and cities. Learn more about career opportunities in meteorology by following this link to a [NOAA factsheet](https://www.weather.gov/media/bro/outreach/pdf/CareerOpportunitiesMeteorology.pdf)!
+
+## What is the difference between weather and climate? 
+
+Weather is what's happening outside right now or in the immediate future. Weather changes all the time! One day it may be sunny and warm, then the next it's cloudy and rainy. Or it may be calm in the morning, then windy in the afternoon. Weather can change from hour to hour and day to day. Weather provides a snapshot of what is happening in the atmosphere right now.
+
+Climate, on the other hand, is more about long-term weather patterns for a certain area over many years. For example, if you live in the tropics you can expect warm temperatures year-round, high humidity, and both dry and rainy seasons. We know that this is the climate because of over 30 years of data collection and observations.Climate helps us understand what kind of weather to expect in different parts of the world at different times of the year. It's like looking at the big picture of the atmosphere over a long period of time.
+
+Visit this [National Geographic article](https://education.nationalgeographic.org/resource/weather-or-climate-whats-difference/) to learn more about weather and climate!
+
+# Weather Monitoring Parameters
+
+On this page are descriptions of weather parameters that are collected through the LOOOP with HOBO Onset weather stations. When reading through these descriptions, think about how one parameter may affect others!
+
+## Temperature
+
+Temperature refers to how cold or hot the atmosphere is. It is a measurement of the average kinetic energy of air molecules, or how fast they're moving around. Temperature can vary widely from one place to another and over a day, season, or year. There are several factors that influence temperature including: latitude, altitude, Earth's position, ocean currents and winds, or even the amount of human-made structures (aka urban heat island effect). Scientists typically describe temperature using the Celsius scale, but may have to convert it to the Fahrenheit scale when sharing results with other United States citizens. Monitoring air temperatures can help us understand our local short- and long-term weather patterns that may influence plant growth, human activities, and lake water quality.
+
+## Relative Humidity
+
+Humidity refers to the amount of water vapor in the air. Water vapor enters the atmosphere by evaporating from liquid water sources like lakes and oceans. This process is part of the [water cycle](https://www.noaa.gov/education/resource-collections/freshwater/water-cycle).Humidity is often shown as relative humidity, or the percentage of the maximum amount of water that air can hold at a given temperature. Warm air holds more water vapor than cool air. At a relative humidity of 100 percent, the air is saturated and cannot hold any more water vapor. The excess water vapor then falls back to the Earth as precipitation.
+
+## Rainfall
+
+Rainfall is the amount of precipitation experienced as rain over time. Rainfall forms as water vapor condenses and the air becomes saturated. It is measured using a rain gauge. The collection cup funnels the water to a small tipping spoon mechanism. Once about 0.2 mm (0.01 in) of water collects in the spoon mechanism, it tips to pour the water out and records the data. Rain is important for all life on Earth! It helps plants grow, fills rivers and lakes, regulates air temperatures, and can provide drinking water. Too much or too little rainfall can be disastrous for humans, causing flooding or droughts.
+
+## Wind Speed
+
+Wind is the movement of air and forms because of differences in temperature and atmospheric pressures between localities. They tend to blow from areas of cold, high pressure to areas of warm, low pressure. In our area, the windiest seasons are typically the fall and spring when air temperatures and atmospheric pressures are changing. Wind can have seasonal and daily patterns! Wind speed measures the rate at which air is moving horizontally past a point for a given amount of time. All wind speeds shown in the app are 1-hour average wind speeds. 
+
+Do you think that wind speeds are the same over land as they are over the ocean? Check out this [link](https://www.ndbc.noaa.gov/education/windspeed.shtml) to find out the answer!
+
+## Gust Speed
+
+Over the course of an hour, day, or season, wind speeds can vary widely! Wind gusts are bursts of wind that may last less than 20 seconds. Typically, changes in wind speed are considered gusts if the peak wind speed reaches 8 m/s (16 knots) and the difference between the peak and lull speeds is at least 4.5 m/s (9 knots).
+
+## Wind Direction
+
+Wind can move heat, moisture, pollutants and dust great distances as well as influence the landscape. Air masses generally move from areas of high pressure to low pressure. Prevailing winds blow from a single direction over certain areas and generally blow east to west due to the Coriolis effect. The Coriolis effect is the result of the Earth's rotational spin that causes wind systems twist counter-clockwise in the Northern hemisphere. Wind direction can also be influenced by buildings and fronts (the boundary between two air masses differing in pressure and temperature).

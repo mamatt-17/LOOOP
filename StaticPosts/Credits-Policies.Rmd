@@ -15,13 +15,21 @@ output:
 ## Credits  
 The **"Lake Ontario, Oneida, Onondaga Program (LOOOP)"** was developed by the [Upstate Freshwater Institute (UFI)](www.upstatefreshwater.org), a not-for-profit corporation dedicated to advancing freshwater science and education in New York. 
 
-This web application and the LOOOP was made possible by funding through the **New York's Great Lakes Basin Small Grants Program** (made possible by the New York State Environmental Protection Fund and Article 14 of Environmental Conservation Law; 2021) and by the **National Oceanic and Atmospheric Administration's Bay Watershed Education and Training (B-WET) program** for the Great Lakes region (2022). _Additional support for the LOOOP loan program has been provided by the Youth Learning As Citizen Scientists (YLACES) and Dreyfus Foundation._
-  
+This web application and the LOOOP were made possible by funding through the [New York's Great Lakes Basin Small Grants Program](https://small-grants-program-ccegeomaps.hub.arcgis.com/) (2021) and by the [National Oceanic and Atmospheric Administration's Bay Watershed Education and Training (B-WET) program](https://www.noaa.gov/office-education/bwet) for the Great Lakes region (2022). _Additional support for the LOOOP loan program has been provided by the Youth Learning As Citizen Scientists (YLACES) and Dreyfus Foundation._
+
 Webpage content was developed by UFI staff and volunteers and workstudy students from the New York State College of Environmental Science and Forestry.  
 
-This application was made using Rstudio, R, and the shinyapps.io server platforms. The application code is freely available in a public repository on [GitHub](https://github.com/mamatt-17/LOOOP).
+## About the New York's Great Lakes Basin Small Grants Program:
+New York Sea Grant in partnership with the New York State Department of Environmental Conservation created this [program](https://small-grants-program-ccegeomaps.hub.arcgis.com/) with support by the New York State Environmental Protection Fund and Article 14 of Environmental Conservation Law. The goal of the program is to support projects that help implement goals of the [Great Lakes Action Agenda](https://extapps.dec.ny.gov/docs/regions_pdf/glaai.pdf). These efforts help to restore and revitalize the state's Great Lakes watersheds, demonstrate ecosystem-based management, and help lead to larger scale activities that protect natural resources, environmental quality, and economic development.
 
-## Community Partners
+## About the NOAA B-WET program:
+One of the Office of Education’s programs is the [NOAA Bay Watershed Education and Training (B-WET) program](https://www.noaa.gov/office-education/bwet). Established by Congress in 2002, the B-WET program is an environmental education program that promotes locally relevant, authentic experiential STEM learning for K-12 audiences. B-WET fosters the growth of new, innovative programs and encourages capacity-building and environmental education partnerships. Funded projects advance ocean, climate, and other environmental literacy principles.
+
+B-WET funding is provided through competitive grants that promote Meaningful Watershed Educational Experiences (MWEEs). MWEEs include learning both outdoors and in the classroom. The activities are driven by rigorous academic learning standards and aim to increase participants’ understanding and stewardship of watersheds and related ocean, coastal, riverine, estuarine, and Great Lakes ecosystems.
+
+The B-WET program currently serves seven geographic areas of the country: California, Chesapeake, Great Lakes, Gulf of Mexico, Hawaii, New England, and the Pacific Northwest. Regional implementation allows B-WET programs to support grantee capacity-building and to connect grantees to local NOAA assets and relevant STEM expertise, while being responsive to local education and environmental priorities.
+
+## LOOOP Community Partners
 We wish to extend our appreciation to our community partners including the State University of New York College of Environmental Science and Forestry's Open Academy (SUNY-ESF OA), the Onondaga-Cortland-Madison Boards of Cooperative Services (OCM-BOCES), Neighbors of Onondaga Nation (NOON), and Izaak Walton League of America-Central NY Chapter for their support of LOOOP activities including providing professional development opportunities to local educators and assisting with student learning experiences.
   
 ## Privacy and Cookie Policy  
@@ -29,5 +37,7 @@ This site uses Google Analytics to allow tracking technologies and services on t
 
 If you would like to opt out of data collected on this site using Google Analytics, we encourage you to install this [add-on](https://tools.google.com/dlpage/gaoptout/?hl=en-GB) to your browser.
 
-## Licenses  
-The purpose of this application is educational. Data and information displayed by this application allows users to share and adapt the presented materials for non-commercial use. These data should not be used for non-educational purposes, please contact [UFI](UFIContact@upstatefreshwater.org) if there are questions pertaining to the data or use of the data.
+## Data Usability and Licenses  
+The purpose of this application is educational. Standard environmental monitoring protocols (from Izaak Walton League and GLOBE) and manufacturer's instructions are provided to student groups; however, the collected data are of unknown quality. Data and information displayed by this application allows users to share and adapt the presented materials for non-commercial use. These data should not be used for non-educational purposes, please contact [UFI](UFIContact@upstatefreshwater.org) if there are questions pertaining to the data or use of the data.
+
+This application was made using Rstudio, R, and the shinyapps.io server platforms. The application code is freely available in a public repository on [GitHub](https://github.com/mamatt-17/LOOOP).
