@@ -36,7 +36,7 @@ These data were collected by students as part of the [Upstate Freshwater Institu
 Currently our app is able to show data that is collected in streams using Izaak Walton League or GLOBE protocols. Our equipment loan program offers water chemistry testing kits, nets, and measuring tools that are needed to make these observations. Learn more about the stream parameters by clicking on the navigation tab! Our app also shows hourly data of weather parameters collected using a Onset HOBO® weather station. Each weather station is outfitted with the same sensors and students may choose at what frequency to collect data. Learn more about the weather parameters by clicking on the navigation tab!
 
 ## How can I submit data to this app?
-We are currently developing a Google Form that will allow students to submit data to UFI for display on the application. Weather data is collected by an electronic weather station and is uploaded to the app as soon as the equipment is returned to UFI or emailed to UFI staff.
+Data can be submitted to UFI by filling out this [Google Form](https://forms.gle/rVUDd8ZK3bgaAaQL6). Weather data is collected by an electronic weather station and is uploaded to the app as soon as the equipment is returned to UFI or emailed to UFI staff.
 
 ## Where can I learn more about our local waterways?
 You can learn more about the characteristics and issues facing Lake Ontario, Oneida Lake, and Onondaga Lake at this [link](https://sites.google.com/view/looop-ufi/home).  Follow us @lake_looop on [Instagram](https://www.instagram.com/lake_looop/)!
