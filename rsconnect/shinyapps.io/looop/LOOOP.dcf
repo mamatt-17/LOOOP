@@ -5,9 +5,9 @@ account: looop
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6336051
-bundleId: 8328615
+bundleId: 8953317
 url: https://looop.shinyapps.io/LOOOP/
 version: 1
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: CSV_files/3Rivers/OneidaR.csv|CSV_files/3Rivers/OswegoR.csv|CSV_files/3Rivers/SenecaR.csv|levels.rdata|mapframe.rdata|river_data.csv|riverdata.rdata|stream.rdata|weather.rdata
+ignoredFiles: levels.rdata|mapframe.rdata|river_data.csv|riverdata.rdata|stream.rdata|weather.rdata
