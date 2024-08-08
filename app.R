@@ -18,6 +18,7 @@ library(scales)
 library(htmltools)
 library(fontawesome)
 library(DT)
+library(yaml)
 
 
 
