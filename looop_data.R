@@ -3,7 +3,7 @@
 # Set working directory and load packages----
 my_packages <- c("lubridate", "plyr", "dplyr","tidyr", "stringi")
 lapply(my_packages, require, character.only = TRUE)
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Read in csv files of each dataset----
 # 3 Rivers data, read all files into 1 dataset----
